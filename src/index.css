@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --gold-primary: #D4AF37;
+    --gold-dark: #AA7C11;
+    --gold-light: #FBF5E5;
+    --royal-maroon: #5E0B1B;
+    --royal-crimson: #800020;
+    --ivory-cream: #FCF9F2;
+  }
+}
+
+@keyframes float-petal {
+  0% {
+    transform: translateY(-20px) rotate(0deg) scale(0.8);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.9;
+  }
+  85% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(105vh) rotate(360deg) scale(1.1);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+.animate-float-petal {
+  animation: float-petal linear infinite;
+}
+
+.shimmer-gold {
+  background: linear-gradient(90deg, #b8860b 0%, #ffd700 25%, #fff8dc 50%, #ffd700 75%, #b8860b 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+.gold-foil-bg {
+  background: linear-gradient(135deg, #d4af37 0%, #f3e5ab 25%, #aa7c11 50%, #fbf5e5 75%, #b8860b 100%);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #fdfbf7;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #d4af37;
+  border-radius: 9999px;
+}
