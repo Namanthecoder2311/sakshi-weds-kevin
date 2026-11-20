@@ -1,0 +1,251 @@
+// The 1.mp4-style opening: closed pink curtains → part & tie back → the painted couple scene.
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { ART, COUPLE } from './config';
+import { WaxSeal } from './ornaments';
+
+/** true once loaded, false if missing, null while checking */
+export function useImage(src?: string) {
+  const [ok, setOk] = useState<boolean | null>(src ? null : false);
+  useEffect(() => {
+    if (!src) return;
+    const i = new Image();
+    i.onload = () => setOk(true);
+    i.onerror = () => setOk(false);
+    i.src = src;
+  }, [src]);
+  return ok;
+}
+
+/* ───────── stand-in scene used until public/art/cover.jpg exists ───────── */
+function FallbackScene() {
+  const domes = [
+    [300, 470, 34],
+    [236, 488, 18],
+    [364, 488, 18],
+    [150, 500, 24],
+    [450, 500, 24],
+    [96, 520, 13],
+    [504, 520, 13],
+  ];
+  return (
+    <svg viewBox="0 0 600 900" preserveAspectRatio="xMidYMax slice" className="h-full w-full" aria-hidden>
+      <defs>
+        <linearGradient id="fb-sky" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#cfe0ee" />
+          <stop offset="0.55" stopColor="#f6e9e4" />
+          <stop offset="1" stopColor="#f9e3d6" />
+        </linearGradient>
+        <linearGradient id="fb-gold" x1="0" x2="1">
+          <stop offset="0" stopColor="#d6a356" />
+          <stop offset="0.5" stopColor="#f2d08e" />
+          <stop offset="1" stopColor="#c9914a" />
+        </linearGradient>
+        <linearGradient id="fb-lake" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#8fcfd4" />
+          <stop offset="1" stopColor="#c4e7e4" />
+        </linearGradient>
+        <filter id="fb-soft">
+          <feGaussianBlur stdDeviation="8" />
+        </filter>
+      </defs>
+      <rect width="600" height="900" fill="url(#fb-sky)" />
+      <g fill="#fff" opacity="0.8" filter="url(#fb-soft)">
+        <ellipse cx="140" cy="300" rx="120" ry="26" />
+        <ellipse cx="470" cy="260" rx="130" ry="28" />
+        <ellipse cx="320" cy="380" rx="170" ry="24" />
+      </g>
+      <g fill="url(#fb-gold)">
+        <rect x="70" y="520" width="460" height="70" />
+        <rect x="210" y="480" width="180" height="110" />
+        {domes.map(([x, y, r]) => (
+          <path key={`${x}-${y}`} d={`M${x - r} ${y} C${x - r * 1.1} ${y - r * 1.1} ${x - r * 0.2} ${y - r * 1.5} ${x} ${y - r * 1.9} C${x + r * 0.2} ${y - r * 1.5} ${x + r * 1.1} ${y - r * 1.1} ${x + r} ${y}Z`} />
+        ))}
+      </g>
+      <g fill="#b9844a" opacity="0.5">
+        {Array.from({ length: 20 }, (_, i) => (
+          <path key={i} d={`M${82 + i * 22} 586 v-22 a7 7 0 0 1 14 0 v22z`} />
+        ))}
+      </g>
+      <rect y="588" width="600" height="8" fill="#9dbb7d" />
+      <rect y="594" width="600" height="140" fill="url(#fb-lake)" />
+      <g opacity="0.18" transform="translate(0 1186) scale(1 -1)">
+        <rect x="70" y="520" width="460" height="70" fill="#d6a356" />
+      </g>
+      <rect y="730" width="600" height="14" fill="#f3e8da" />
+      {Array.from({ length: 28 }, (_, i) => (
+        <rect key={i} x={6 + i * 22} y="744" width="10" height="50" rx="5" fill="#efe2d0" />
+      ))}
+      <rect y="792" width="600" height="108" fill="#f1d6cc" />
+    </svg>
+  );
+}
+
+export function CoverPainting({ className }: { className?: string }) {
+  const ok = useImage(ART.cover);
+  return (
+    <div className={className}>
+      {ok ? <img src={ART.cover} alt={`${COUPLE.bride} and ${COUPLE.groom} on the palace terrace`} className="h-full w-full object-cover object-bottom" /> : <FallbackScene />}
+    </div>
+  );
+}
+
+/* ───────── curtains ───────── */
+const FOLDS =
+  'repeating-linear-gradient(90deg, rgba(120,20,50,0.28) 0, rgba(255,255,255,0.18) 3.2%, rgba(120,20,50,0.10) 6%, rgba(255,255,255,0.22) 8.6%, rgba(120,20,50,0.28) 11%)';
+
+function Panel({ side, open }: { side: 'left' | 'right'; open: boolean }) {
+  const left = side === 'left';
+  // a plain rectangle when closed; a drape gathered at the tie-back when open
+  const closed = left ? 'polygon(0% 0%, 100% 0%, 100% 50%, 100% 100%, 0% 100%)' : 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 50%)';
+  const drape = left ? 'polygon(0% 0%, 100% 0%, 34% 56%, 22% 100%, 0% 100%)' : 'polygon(0% 0%, 100% 0%, 100% 100%, 78% 100%, 66% 56%)';
+  return (
+    <motion.div
+      className={`absolute top-0 h-full w-1/2 ${left ? 'left-0' : 'right-0'}`}
+      style={{ transformOrigin: left ? '0% 0%' : '100% 0%', background: `${FOLDS}, linear-gradient(180deg, #f2a9bf, #e57f9f 60%, #d96a8e)` }}
+      initial={false}
+      animate={open ? { clipPath: drape, scaleX: 0.4 } : { clipPath: closed, scaleX: 1 }}
+      transition={{ duration: 2, ease: [0.65, 0, 0.25, 1] }}
+    >
+      <div className="absolute inset-y-0 w-px bg-[#c9a24a]/60" style={left ? { right: 0 } : { left: 0 }} />
+    </motion.div>
+  );
+}
+
+function Tieback({ side }: { side: 'left' | 'right' }) {
+  return (
+    <motion.div
+      className="absolute top-[54%]"
+      style={side === 'left' ? { left: 'calc(6.8% - clamp(13px,3vw,20px))' } : { right: 'calc(6.8% - clamp(13px,3vw,20px))' }}
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 1.6, duration: 0.6 }}
+    >
+      <svg viewBox="0 0 40 90" className="w-[clamp(26px,6vw,40px)] drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]" aria-hidden>
+        <defs>
+          <linearGradient id={`tb-${side}`} x1="0" x2="1">
+            <stop offset="0" stopColor="#a87a26" />
+            <stop offset="0.5" stopColor="#f6dc8a" />
+            <stop offset="1" stopColor="#a87a26" />
+          </linearGradient>
+        </defs>
+        <rect x="2" y="6" width="36" height="8" rx="4" fill={`url(#tb-${side})`} />
+        <circle cx="20" cy="22" r="8" fill={`url(#tb-${side})`} />
+        <path d="M14 28 h12 l6 52 h-24z" fill={`url(#tb-${side})`} />
+        {Array.from({ length: 8 }, (_, i) => (
+          <line key={i} x1={10 + i * 3} y1="52" x2={8 + i * 3.4} y2="84" stroke="#8a6420" strokeWidth="0.8" />
+        ))}
+      </svg>
+    </motion.div>
+  );
+}
+
+function Valance() {
+  return (
+    <div className="pointer-events-none absolute inset-x-0 top-0 z-[3]" aria-hidden>
+      <svg viewBox="0 0 600 60" preserveAspectRatio="none" className="h-[clamp(44px,8svh,72px)] w-full">
+        <defs>
+          <linearGradient id="val-fab" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stopColor="#d96a8e" />
+            <stop offset="1" stopColor="#f2a9bf" />
+          </linearGradient>
+          <linearGradient id="val-gold" x1="0" x2="1">
+            <stop offset="0" stopColor="#a87a26" />
+            <stop offset="0.5" stopColor="#f6dc8a" />
+            <stop offset="1" stopColor="#a87a26" />
+          </linearGradient>
+        </defs>
+        <path d={`M0 0 H600 V36 ${Array.from({ length: 10 }, (_, i) => `Q${600 - i * 60 - 30} 58 ${600 - (i + 1) * 60} 36`).join(' ')} Z`} fill="url(#val-fab)" />
+        <path d={`M600 36 ${Array.from({ length: 10 }, (_, i) => `Q${600 - i * 60 - 30} 58 ${600 - (i + 1) * 60} 36`).join(' ')}`} stroke="url(#val-gold)" strokeWidth="2.5" fill="none" />
+        {Array.from({ length: 10 }, (_, i) => (
+          <circle key={i} cx={30 + i * 60} cy="49" r="3.4" fill="url(#val-gold)" />
+        ))}
+      </svg>
+    </div>
+  );
+}
+
+export function Curtains({ open }: { open: boolean }) {
+  return (
+    <div className="pointer-events-none absolute inset-0 z-[2]">
+      <Panel side="left" open={open} />
+      <Panel side="right" open={open} />
+      {open && <Tieback side="left" />}
+      {open && <Tieback side="right" />}
+      <Valance />
+    </div>
+  );
+}
+
+/* ───────── “You are invited” frame ───────── */
+export function InvitedFrame() {
+  return (
+    <div className="relative mx-auto w-[min(76vw,380px)] rounded-[999px] border-2 border-[#c9a24a] bg-[#fbf7f0]/88 px-6 py-[clamp(14px,2.6svh,26px)] text-center shadow-[0_10px_30px_rgba(90,60,30,0.18)] backdrop-blur-[2px]">
+      <div className="pointer-events-none absolute inset-[5px] rounded-[999px] border border-[#d8bd8c]" />
+      <p className="font-display text-[clamp(1.5rem,6.6vw,2.3rem)] leading-[1.1] font-medium tracking-[0.18em] text-[#9d8a72] uppercase">
+        You are
+        <br />
+        invited
+      </p>
+      <p className="mt-1 font-script text-[clamp(1.4rem,6vw,2rem)] text-[#9c1f45]">
+        {COUPLE.bride} &amp; {COUPLE.groom}
+      </p>
+    </div>
+  );
+}
+
+/* ───────── birds that take off when the curtains part ───────── */
+export function Birds() {
+  const colors = ['#f19ac0', '#f5c04a', '#7ab8e0', '#c99ad8', '#f19ac0', '#7ad0c0'];
+  return (
+    <div className="pointer-events-none absolute inset-0 z-[4] overflow-hidden" aria-hidden>
+      {colors.map((c, i) => (
+        <motion.svg
+          key={i}
+          viewBox="0 0 30 20"
+          className="absolute w-[clamp(18px,4.5vw,28px)]"
+          style={{ left: `${18 + i * 12}%`, top: `${44 + (i % 3) * 7}%` }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 1, 1, 0], x: (i % 2 ? 1 : -1) * (80 + i * 20), y: -320 - i * 30 }}
+          transition={{ duration: 3.4, delay: 1 + i * 0.18, ease: 'easeOut' }}
+        >
+          <path className="wing" d="M15 10 C10 0 4 2 0 6 C6 6 10 8 15 10 C20 8 24 6 30 6 C26 2 20 0 15 10Z" fill={c} />
+        </motion.svg>
+      ))}
+    </div>
+  );
+}
+
+/* ───────── seal + button on the closed curtains ───────── */
+export function SealButton({ show, onOpen }: { show: boolean; onOpen: () => void }) {
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          className="absolute inset-0 z-[5] flex flex-col items-center justify-center"
+          exit={{ opacity: 0, scale: 1.25 }}
+          transition={{ duration: 0.5 }}
+        >
+          <p className="mb-5 font-deva text-[clamp(1rem,4.4vw,1.4rem)] text-[#fff3d6] drop-shadow">॥ शुभ विवाह ॥</p>
+          <motion.button
+            onClick={onOpen}
+            aria-label="Open the invitation"
+            animate={{ scale: [1, 1.06, 1] }}
+            transition={{ repeat: Infinity, duration: 2.4, ease: 'easeInOut' }}
+            whileTap={{ scale: 0.9 }}
+            className="relative"
+          >
+            <span className="absolute inset-0 rounded-full bg-[#ffd6e0]/50 blur-xl" />
+            <WaxSeal className="relative w-[clamp(96px,28vw,140px)] drop-shadow-[0_10px_16px_rgba(70,0,20,0.45)]" />
+          </motion.button>
+          <button
+            onClick={onOpen}
+            className="mt-5 rounded-full bg-[#fffaf6]/92 px-7 py-2.5 font-script text-[clamp(1.5rem,6vw,2rem)] leading-none text-[#4a3036] shadow-[0_8px_24px_rgba(90,20,40,0.25)]"
+          >
+            Open the invitation
+          </button>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}

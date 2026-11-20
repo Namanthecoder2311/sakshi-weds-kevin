@@ -1,77 +1,66 @@
-import React, { useState } from 'react';
-import { PetalParticles } from './components/PetalParticles';
-import { EnvelopeHero } from './components/EnvelopeHero';
-import { NavbarAndControls } from './components/NavbarAndControls';
-import { AnnouncementCard } from './components/AnnouncementCard';
-import { BrotherNoteModal } from './components/BrotherNoteModal';
-import { ScratchCard } from './components/ScratchCard';
-import { TicTacToeGame } from './components/TicTacToeGame';
-import { CountdownTimer } from './components/CountdownTimer';
-import { LoveStoryTimeline } from './components/LoveStoryTimeline';
-import { EventsTimeline } from './components/EventsTimeline';
-import { WardrobePlanner } from './components/WardrobePlanner';
-import { VenueSection } from './components/VenueSection';
-import { PhotoGallery } from './components/PhotoGallery';
-import { RSVPAndBlessings } from './components/RSVPAndBlessings';
-import { WeddingFooter } from './components/WeddingFooter';
+import { useRef, useState } from 'react';
+import { Scene3D } from './invite/Scene3D';
+import { MUSIC } from './invite/config';
 
-export const App: React.FC = () => {
-  const [isEnvelopeOpen, setIsEnvelopeOpen] = useState(false);
+export default function App() {
+  // `?open` jumps straight to the card (handy for re-visits and previews)
+  const skip = typeof location !== 'undefined' && new URLSearchParams(location.search).has('open');
+  const audio = useRef<HTMLAudioElement>(null);
+  const [playing, setPlaying] = useState(false);
+
+  const toggle = () => {
+    const a = audio.current;
+    if (!a) return;
+    if (a.paused) void a.play().then(() => setPlaying(true));
+    else {
+      a.pause();
+      setPlaying(false);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-[#FCF9F2] text-[#292524] relative selection:bg-[#D4AF37] selection:text-white">
-      {/* 3D Wax Seal Envelope Hero Screen */}
-      <EnvelopeHero
-        isOpen={isEnvelopeOpen}
-        onOpen={() => setIsEnvelopeOpen(true)}
+    <main>
+      <Scene3D
+        skip={skip}
+        onOpen={() => {
+          const a = audio.current;
+          if (MUSIC && a) {
+            a.volume = 0.5;
+            void a.play().then(() => setPlaying(true)).catch(() => {});
+          }
+        }}
       />
-
-      {/* Floating Canvas Flower Petal Particles */}
-      <PetalParticles />
-
-      {/* Sticky Navbar & Controls */}
-      <NavbarAndControls />
-
-      {/* Main Wedding Invitation Content */}
-      <main className="relative z-10 space-y-6">
-        {/* 1. Auspicious Royal Announcement */}
-        <AnnouncementCard />
-
-        {/* 2. Special Dedication From Brother */}
-        <BrotherNoteModal />
-
-        {/* 3. Interactive Save The Date Golden Scratch Card */}
-        <ScratchCard />
-
-        {/* 4. Real-time Countdown Timer */}
-        <CountdownTimer />
-
-        {/* 5. Interactive Love Match Mini Game */}
-        <TicTacToeGame />
-
-        {/* 6. Our Love Story Milestones */}
-        <LoveStoryTimeline />
-
-        {/* 7. Wedding Festivities & Schedule */}
-        <EventsTimeline />
-
-        {/* 8. Virtual Wardrobe & Color Palette Planner */}
-        <WardrobePlanner />
-
-        {/* 9. Palace Venue, Travel & Weather Concierge */}
-        <VenueSection />
-
-        {/* 10. Pre-Wedding Photo Gallery & Lightbox */}
-        <PhotoGallery />
-
-        {/* 11. RSVP & Live Blessing Wall */}
-        <RSVPAndBlessings />
-      </main>
-
-      {/* 12. Royal Footer */}
-      <WeddingFooter onReopenEnvelope={() => setIsEnvelopeOpen(false)} />
-    </div>
+      <div className="pointer-events-none fixed inset-0 z-30 overflow-hidden" aria-hidden>
+        {Array.from({ length: 14 }, (_, i) => (
+          <span
+            key={i}
+            className="petal"
+            style={{
+              left: `${(i * 7.3 + 3) % 100}%`,
+              animationDuration: `${13 + (i % 6) * 2.5}s`,
+              animationDelay: `${-i * 2}s`,
+              ['--drift' as string]: `${(i % 2 ? 1 : -1) * (30 + (i % 5) * 18)}px`,
+              ['--spin' as string]: `${(i % 2 ? 1 : -1) * (300 + i * 20)}deg`,
+            }}
+          >
+            <svg viewBox="0 0 12 16" style={{ width: 8 + (i % 3) * 3 }}>
+              <path d="M6 0 C12 5 11 12 6 16 C1 12 0 5 6 0Z" fill={['#e98aa5', '#f4b6c8', '#c9425f', '#f8cdd8'][i % 4]} />
+            </svg>
+          </span>
+        ))}
+      </div>
+      {MUSIC && (
+        <>
+          <audio ref={audio} src={MUSIC} loop preload="auto" />
+          <button
+            onClick={toggle}
+            aria-label={playing ? 'Pause music' : 'Play music'}
+            className="fixed top-4 right-4 z-40 grid h-11 w-11 place-items-center rounded-full border border-[#e7c977]/60 bg-black/30 text-[#f3e3c3] backdrop-blur"
+          >
+            {playing ? '❚❚' : '♪'}
+          </button>
+        </>
+      )}
+    </main>
   );
-};
-
-export default App;
+}
