@@ -69,7 +69,7 @@ export function Opening3D({ onOpen, onDone, onFail }: { onOpen: () => void; onDo
       {/* loading */}
       <AnimatePresence>
         {!ready && (
-          <motion.div className="absolute inset-0 grid place-items-center bg-[#140306]" exit={{ opacity: 0 }} transition={{ duration: 0.8 }}>
+          <motion.div className="absolute inset-0 grid place-items-center bg-[#140306]" exit={{ opacity: 0, scale: 1.15 }} transition={{ duration: 0.35 }}>
             <motion.div animate={{ scale: [1, 1.06, 1], opacity: [0.7, 1, 0.7] }} transition={{ repeat: Infinity, duration: 1.8 }}>
               <WaxSeal tone="gold" className="w-24" />
             </motion.div>

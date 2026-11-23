@@ -119,21 +119,6 @@ function goldMask(W: number, H: number) {
   }
   // zari strip on the meeting edge
   ctx.fillRect(W - 16, 0, 16, H);
-  // brass knocker: rosette mount + ring
-  const kx = W - 72,
-    ky = 640;
-  ctx.beginPath();
-  ctx.arc(kx, ky - 46, 16, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.lineWidth = 12;
-  ctx.beginPath();
-  ctx.arc(kx, ky, 34, 0, Math.PI * 2);
-  ctx.stroke();
-  ctx.lineWidth = 8;
-  ctx.beginPath();
-  ctx.moveTo(kx, ky - 46);
-  ctx.lineTo(kx, ky - 34);
-  ctx.stroke();
   return c;
 }
 

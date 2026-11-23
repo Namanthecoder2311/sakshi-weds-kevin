@@ -8,6 +8,7 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { blurredTexture, doorTextures, jaliTextures, marbleTexture, radialSprite, sealTextures } from './textures';
+import { createFilmPass, createGarlands, createKnocker, createLanterns, createPetals, createRays } from './extras';
 
 export type Palace = { open: () => void; dispose: () => void };
 
@@ -55,6 +56,9 @@ export async function createPalace(canvas: HTMLCanvasElement, opts: { cover: str
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 0.9;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  const small = window.innerWidth < 700;
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color('#140306');
@@ -71,7 +75,9 @@ export async function createPalace(canvas: HTMLCanvasElement, opts: { cover: str
   const coverTex = new THREE.Texture(coverImg);
   coverTex.colorSpace = THREE.SRGBColorSpace;
   coverTex.needsUpdate = true;
-  const painting = new THREE.Mesh(new THREE.PlaneGeometry(PAINT_W, PAINT_H), new THREE.MeshBasicMaterial({ map: coverTex, toneMapped: false }));
+  const paintMat = new THREE.MeshBasicMaterial({ map: coverTex, toneMapped: false });
+  paintMat.color.setScalar(1.12);
+  const painting = new THREE.Mesh(new THREE.PlaneGeometry(PAINT_W, PAINT_H), paintMat);
   painting.position.set(0, 0, PAINT_Z);
   scene.add(painting);
   const backdrop = new THREE.Mesh(new THREE.PlaneGeometry(16, 10), new THREE.MeshBasicMaterial({ map: blurredTexture(coverImg), toneMapped: false }));
@@ -107,6 +113,8 @@ export async function createPalace(canvas: HTMLCanvasElement, opts: { cover: str
   const wallMat = new THREE.MeshStandardMaterial({ map: marble, roughness: 0.8, metalness: 0, color: '#cbb89c' });
   const wall = new THREE.Mesh(new THREE.ExtrudeGeometry(wallShape, { depth: 0.4, bevelEnabled: false, curveSegments: 48 }), wallMat);
   wall.position.z = -0.32;
+  wall.castShadow = true;
+  wall.receiveShadow = true;
   scene.add(wall);
 
   // gold arch trim
@@ -142,6 +150,9 @@ export async function createPalace(canvas: HTMLCanvasElement, opts: { cover: str
   const uv = jg.attributes.uv;
   for (let i = 0; i < uv.count; i++) uv.setXY(i, (uv.getX(i) + HOLE_W) / (2 * HOLE_W), (uv.getY(i) - HOLE_H) / HOLE_W);
   jali.position.z = 0.0;
+  // the lattice casts patterned light onto the floor
+  jali.castShadow = true;
+  jali.customDepthMaterial = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, alphaMap: jt.alphaMap, alphaTest: 0.5 });
   scene.add(jali);
 
   // pillars either side
@@ -149,6 +160,7 @@ export async function createPalace(canvas: HTMLCanvasElement, opts: { cover: str
   [-1.62, 1.62].forEach((x) => {
     const p = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.19, 4.2, 32), pillarMat);
     p.position.set(x, 0.3, 0.25);
+    p.castShadow = true;
     scene.add(p);
     const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.27, 0.19, 0.22, 32), goldMat);
     cap.position.set(x, 2.5, 0.25);
@@ -162,6 +174,7 @@ export async function createPalace(canvas: HTMLCanvasElement, opts: { cover: str
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), new THREE.MeshStandardMaterial({ map: marble, color: '#9e8478', roughness: 0.3, metalness: 0.05 }));
   floor.rotation.x = -Math.PI / 2;
   floor.position.y = -HOLE_H - 0.05;
+  floor.receiveShadow = true;
   scene.add(floor);
 
   /* ── the doors ── */
@@ -197,12 +210,17 @@ export async function createPalace(canvas: HTMLCanvasElement, opts: { cover: str
     hinge.position.set(side === 'left' ? -DOOR_W : DOOR_W, 0, 0);
     const mesh = new THREE.Mesh(doorGeo, [edgeMat, edgeMat, edgeMat, edgeMat, side === 'left' ? frontL : frontR, liningMat]);
     mesh.position.x = side === 'left' ? DOOR_W / 2 : -DOOR_W / 2;
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
     hinge.add(mesh);
+    const knock = createKnocker();
+    knock.pivot.position.set(side === 'left' ? DOOR_W - 0.14 : -DOOR_W + 0.14, 0.52, DOOR_T / 2 + 0.035);
+    hinge.add(knock.pivot);
     const half = new THREE.Mesh(sealHalf(side, R), [sealFace, sealSide]);
     half.position.set(side === 'left' ? DOOR_W : -DOOR_W, -0.05, DOOR_T / 2 + 0.005);
     hinge.add(half);
     scene.add(hinge);
-    return { hinge, half };
+    return { hinge, half, ring: knock.ring };
   };
   const L = makeDoor('left');
   const Rt = makeDoor('right');
@@ -237,6 +255,29 @@ export async function createPalace(canvas: HTMLCanvasElement, opts: { cover: str
   rim.position.set(0, 0.3, -0.5);
   scene.add(rim);
 
+  // light from inside the palace: spills out across the floor in the shape of the doorway
+  const spill = new THREE.SpotLight('#ffdca6', 0, 16, 0.62, 0.45, 1.4);
+  spill.position.set(0, 1.7, -3.3);
+  spill.target.position.set(0, -HOLE_H, 3.6);
+  spill.castShadow = true;
+  spill.shadow.mapSize.set(small ? 512 : 1024, small ? 512 : 1024);
+  spill.shadow.camera.near = 0.5;
+  spill.shadow.camera.far = 14;
+  spill.shadow.bias = -0.0006;
+  spill.shadow.normalBias = 0.02;
+  scene.add(spill, spill.target);
+
+  /* -- life: petals, garlands, lanterns, rays -- */
+  const petals = createPetals(small ? 110 : 170);
+  scene.add(petals.mesh);
+  const garlands = createGarlands(HOLE_W, HOLE_H);
+  scene.add(garlands.group);
+  const lanterns = createLanterns([-2.45, 2.45], 3.4);
+  scene.add(lanterns.group);
+  const rays = createRays();
+  rays.group.position.y = -0.2;
+  scene.add(rays.group);
+
   /* ── gold dust ── */
   const N = 360;
   const pos = new Float32Array(N * 3);
@@ -261,6 +302,8 @@ export async function createPalace(canvas: HTMLCanvasElement, opts: { cover: str
   const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.3, 0.55, 0.9);
   composer.addPass(bloom);
   composer.addPass(new OutputPass());
+  const film = createFilmPass();
+  composer.addPass(film);
 
   /* ── framing ── */
   let zStart = 7;
@@ -284,6 +327,20 @@ export async function createPalace(canvas: HTMLCanvasElement, opts: { cover: str
   fit();
   window.addEventListener('resize', fit);
 
+  /* -- parallax from mouse / phone tilt -- */
+  const look = { x: 0, y: 0, tx: 0, ty: 0 };
+  const onPointer = (e: PointerEvent) => {
+    look.tx = (e.clientX / window.innerWidth) * 2 - 1;
+    look.ty = (e.clientY / window.innerHeight) * 2 - 1;
+  };
+  const onTilt = (e: DeviceOrientationEvent) => {
+    if (e.gamma == null || e.beta == null) return;
+    look.tx = Math.max(-1, Math.min(1, e.gamma / 25));
+    look.ty = Math.max(-1, Math.min(1, (e.beta - 45) / 25));
+  };
+  window.addEventListener('pointermove', onPointer);
+  window.addEventListener('deviceorientation', onTilt);
+
   /* ── animation ── */
   let openedAt = -1;
   let done = false;
@@ -293,8 +350,13 @@ export async function createPalace(canvas: HTMLCanvasElement, opts: { cover: str
 
   const frame = () => {
     raf = requestAnimationFrame(frame);
-    const t = clock.getElapsedTime();
+    const dt = Math.min(clock.getDelta(), 0.05);
+    const t = clock.elapsedTime;
     const o = openedAt < 0 ? -1 : t - openedAt;
+    // opening shot: crane down and in towards the doors
+    const intro = ease(clamp01(t / 3.4));
+    look.x += (look.tx - look.x) * 0.04;
+    look.y += (look.ty - look.y) * 0.04;
 
     // candle flicker
     candles.forEach((l, i) => (l.intensity = 2.2 + Math.sin(t * 9 + i * 2) * 0.3 + Math.sin(t * 23 + i) * 0.2));
@@ -311,23 +373,40 @@ export async function createPalace(canvas: HTMLCanvasElement, opts: { cover: str
     Rt.hinge.rotation.y = -swing * 1.95;
     const dolly = o < 0 ? 0 : ease(clamp01((o - 0.8) / 3.1));
     const idle = 1 - dolly;
+    const zPre = zStart + (1 - intro) * 2.8;
+    const yPre = 0.32 + (1 - intro) * 1.25;
     camera.position.set(
-      Math.sin(t * 0.45) * 0.06 * idle,
-      0.32 * (1 - dolly) + Math.sin(t * 0.7) * 0.03 * idle,
-      THREE.MathUtils.lerp(zStart, zEnd, dolly),
+      (Math.sin(t * 0.45) * 0.06 + look.x * 0.28) * idle,
+      yPre * (1 - dolly) + (Math.sin(t * 0.7) * 0.03 - look.y * 0.12) * idle,
+      THREE.MathUtils.lerp(zPre, zEnd, dolly),
     );
-    tmp.set(0, 0.3 * (1 - dolly), PAINT_Z);
+    tmp.set(look.x * 0.08 * idle, (0.3 + (1 - intro) * 0.35) * (1 - dolly), PAINT_Z);
     camera.lookAt(tmp);
+    // knocker rings jolt and swing as the doors start moving
+    const knockSwing = o < 0.35 ? Math.sin(t * 1.3) * 0.02 : Math.sin((o - 0.35) * 8) * Math.exp(-(o - 0.35) * 1.4) * 0.7;
+    L.ring.rotation.x = knockSwing;
+    Rt.ring.rotation.x = knockSwing * 0.9;
 
     // light & bloom
     // a short warm burst as the doors part, fading before the camera reaches the painting
     const pour = o < 0 ? 0 : clamp01((o - 0.3) / 0.6) * (1 - clamp01((o - 1.3) / 1.1));
-    glowMat.opacity = pour * 0.7;
+    glowMat.opacity = pour * 0.45;
     seamMat.opacity = o < 0 ? 0.0 : clamp01(o / 0.3) * (1 - swing);
     rim.intensity = pour * 3;
-    bloom.strength = 0.3 + pour * 0.55;
-    bloom.threshold = 0.9 + 0.08 * dolly;
+    bloom.strength = 0.3 + pour * 0.4;
+    // no bloom on the painting as the camera arrives, so it stays crisp
+    bloom.threshold = 0.9 + 0.6 * dolly;
     dustMat.opacity = 0.35 + pour * 0.6;
+    spill.intensity = o < 0 ? 0 : 55 * clamp01((o - 0.35) / 1.2) * (1 - 0.4 * dolly);
+
+    // petals, garlands and lanterns catch the gust from the doorway
+    const gust = o < 0 ? 0 : clamp01((o - 0.5) / 0.4) * (1 - clamp01((o - 2.3) / 1.4));
+    petals.update(dt, t, gust, -HOLE_H - 0.05);
+    garlands.update(t, gust);
+    lanterns.update(t, gust);
+    rays.update(t, o < 0 ? 0 : clamp01((o - 0.5) / 0.6) * (1 - clamp01((o - 2.4) / 1.2)));
+    film.uniforms.time.value = t;
+    film.uniforms.vignette.value = 0.55 * (1 - dolly * 0.85);
 
     // dust drifts; after opening it streams out of the doorway toward the camera
     const p = dustGeo.attributes.position as THREE.BufferAttribute;
@@ -346,7 +425,7 @@ export async function createPalace(canvas: HTMLCanvasElement, opts: { cover: str
 
     composer.render();
 
-    if (o > 4.1 && !done) {
+    if (o > 3.5 && !done) {
       done = true;
       opts.onDone();
     }
@@ -355,11 +434,13 @@ export async function createPalace(canvas: HTMLCanvasElement, opts: { cover: str
 
   return {
     open: () => {
-      if (openedAt < 0) openedAt = clock.getElapsedTime();
+      if (openedAt < 0) openedAt = clock.elapsedTime;
     },
     dispose: () => {
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', fit);
+      window.removeEventListener('pointermove', onPointer);
+      window.removeEventListener('deviceorientation', onTilt);
       composer.dispose();
       renderer.dispose();
       pmrem.dispose();
