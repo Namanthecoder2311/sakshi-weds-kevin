@@ -15,7 +15,7 @@ export const COUPLE = {
   ],
   groomFamily: [
     'Grandson of Zaverben Champshi Gala',
-    'Son of Mrs. Pragna Gala and Late Mr. Haresh Gala',
+    'Son of Smt. Pragna Gala and Late Mr. Haresh Gala',
     'Village – Toda',
   ],
 };
