@@ -141,3 +141,22 @@
 .title-rose {
   text-shadow: 0 2px 0 rgba(156, 31, 69, 0.1), 0 8px 22px rgba(156, 31, 69, 0.16);
 }
+
+/* ── curtains ───────────────────────────────── */
+.curtain-sway {
+  animation: curtain-sway 6s ease-in-out infinite;
+}
+@keyframes curtain-sway {
+  0%, 100% { transform: skewX(0deg) scaleX(1); }
+  50% { transform: skewX(0.35deg) scaleX(1.006); }
+}
+.curtain-sheen {
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.55) 48%, transparent 62%);
+  background-size: 260% 100%;
+  mix-blend-mode: soft-light;
+  animation: curtain-sheen 7s ease-in-out infinite;
+}
+@keyframes curtain-sheen {
+  0% { background-position: 130% 0; }
+  60%, 100% { background-position: -30% 0; }
+}

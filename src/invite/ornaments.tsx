@@ -76,7 +76,8 @@ export function Flourish({ className }: { className?: string }) {
 }
 
 /** Red sealing-wax disc with an embossed monogram. */
-export function WaxSeal({ className }: { className?: string }) {
+export function WaxSeal({ className, tone = 'red' }: { className?: string; tone?: 'red' | 'gold' }) {
+  const gold = tone === 'gold';
   const id = useId();
   const n = 24;
   const pts = Array.from({ length: n * 2 }, (_, i) => {
@@ -88,26 +89,26 @@ export function WaxSeal({ className }: { className?: string }) {
     <svg viewBox="0 0 100 100" className={className} aria-hidden>
       <defs>
         <radialGradient id={`${id}w`} cx="36%" cy="30%" r="80%">
-          <stop offset="0" stopColor="#e05a6a" />
-          <stop offset="0.35" stopColor="#b11f39" />
-          <stop offset="0.8" stopColor="#7a0f24" />
-          <stop offset="1" stopColor="#560818" />
+          <stop offset="0" stopColor={gold ? '#fff2b8' : '#e05a6a'} />
+          <stop offset="0.35" stopColor={gold ? '#f0c64a' : '#b11f39'} />
+          <stop offset="0.8" stopColor={gold ? '#b8861c' : '#7a0f24'} />
+          <stop offset="1" stopColor={gold ? '#7f5a0c' : '#560818'} />
         </radialGradient>
         <radialGradient id={`${id}i`} cx="62%" cy="68%" r="75%">
-          <stop offset="0" stopColor="#c02a43" />
-          <stop offset="1" stopColor="#82122a" />
+          <stop offset="0" stopColor={gold ? '#f7d36a' : '#c02a43'} />
+          <stop offset="1" stopColor={gold ? '#b8861c' : '#82122a'} />
         </radialGradient>
         <FoilDefs id={`${id}f`} />
       </defs>
       <polygon points={pts} fill={`url(#${id}w)`} strokeLinejoin="round" />
       <circle cx="50" cy="50" r="33" fill={`url(#${id}i)`} />
-      <circle cx="50" cy="50" r="33" fill="none" stroke="#5a0717" strokeWidth="1.6" opacity="0.6" />
-      <circle cx="50" cy="50" r="29" fill="none" stroke="#f08a98" strokeOpacity="0.35" strokeWidth="0.8" />
-      <text x="50" y="61" textAnchor="middle" fontFamily="Great Vibes, cursive" fontSize="30" fill={`url(#${id}f)`} stroke="#5a0717" strokeWidth="0.35">
+      <circle cx="50" cy="50" r="33" fill="none" stroke={gold ? '#7f5a0c' : '#5a0717'} strokeWidth="1.6" opacity="0.6" />
+      <circle cx="50" cy="50" r="29" fill="none" stroke={gold ? '#fff3c4' : '#f08a98'} strokeOpacity="0.35" strokeWidth="0.8" />
+      <text x="50" y="61" textAnchor="middle" fontFamily="Great Vibes, cursive" fontSize="30" fill={gold ? '#7a520c' : `url(#${id}f)`} stroke={gold ? '#fff0c0' : '#5a0717'} strokeWidth="0.35">
         {COUPLE.monogram[0]}
         <tspan dx="-3">{COUPLE.monogram[1]}</tspan>
       </text>
-      <path d="M22 32 Q32 18 52 15" stroke="#ffd0d6" strokeOpacity="0.5" strokeWidth="3" strokeLinecap="round" fill="none" />
+      <path d="M22 32 Q32 18 52 15" stroke={gold ? '#fffbe6' : '#ffd0d6'} strokeOpacity="0.5" strokeWidth="3" strokeLinecap="round" fill="none" />
     </svg>
   );
 }

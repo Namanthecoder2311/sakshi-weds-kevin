@@ -91,4 +91,8 @@ export const ART = {
   wedding: '/art/wedding.webp',
 };
 
+/** Curtain fabric on the opening screen: 'wine' (royal velvet), 'ivory' (champagne silk) or 'emerald' (velvet).
+ *  Preview any of them by adding ?curtain=ivory (etc.) to the URL. */
+export const CURTAIN: 'wine' | 'ivory' | 'emerald' = 'wine';
+
 export const THANK_YOU = 'Your love, blessings & presence mean the world to us. Thank you for being a part of our forever.';

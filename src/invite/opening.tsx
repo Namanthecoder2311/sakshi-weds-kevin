@@ -90,92 +90,7 @@ export function CoverPainting({ className }: { className?: string }) {
   );
 }
 
-/* ───────── curtains ───────── */
-const FOLDS =
-  'repeating-linear-gradient(90deg, rgba(120,20,50,0.28) 0, rgba(255,255,255,0.18) 3.2%, rgba(120,20,50,0.10) 6%, rgba(255,255,255,0.22) 8.6%, rgba(120,20,50,0.28) 11%)';
-
-function Panel({ side, open }: { side: 'left' | 'right'; open: boolean }) {
-  const left = side === 'left';
-  // a plain rectangle when closed; a drape gathered at the tie-back when open
-  const closed = left ? 'polygon(0% 0%, 100% 0%, 100% 50%, 100% 100%, 0% 100%)' : 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 50%)';
-  const drape = left ? 'polygon(0% 0%, 100% 0%, 34% 56%, 22% 100%, 0% 100%)' : 'polygon(0% 0%, 100% 0%, 100% 100%, 78% 100%, 66% 56%)';
-  return (
-    <motion.div
-      className={`absolute top-0 h-full w-1/2 ${left ? 'left-0' : 'right-0'}`}
-      style={{ transformOrigin: left ? '0% 0%' : '100% 0%', background: `${FOLDS}, linear-gradient(180deg, #f2a9bf, #e57f9f 60%, #d96a8e)` }}
-      initial={false}
-      animate={open ? { clipPath: drape, scaleX: 0.4 } : { clipPath: closed, scaleX: 1 }}
-      transition={{ duration: 2, ease: [0.65, 0, 0.25, 1] }}
-    >
-      <div className="absolute inset-y-0 w-px bg-[#c9a24a]/60" style={left ? { right: 0 } : { left: 0 }} />
-    </motion.div>
-  );
-}
-
-function Tieback({ side }: { side: 'left' | 'right' }) {
-  return (
-    <motion.div
-      className="absolute top-[54%]"
-      style={side === 'left' ? { left: 'calc(6.8% - clamp(13px,3vw,20px))' } : { right: 'calc(6.8% - clamp(13px,3vw,20px))' }}
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1.6, duration: 0.6 }}
-    >
-      <svg viewBox="0 0 40 90" className="w-[clamp(26px,6vw,40px)] drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)]" aria-hidden>
-        <defs>
-          <linearGradient id={`tb-${side}`} x1="0" x2="1">
-            <stop offset="0" stopColor="#a87a26" />
-            <stop offset="0.5" stopColor="#f6dc8a" />
-            <stop offset="1" stopColor="#a87a26" />
-          </linearGradient>
-        </defs>
-        <rect x="2" y="6" width="36" height="8" rx="4" fill={`url(#tb-${side})`} />
-        <circle cx="20" cy="22" r="8" fill={`url(#tb-${side})`} />
-        <path d="M14 28 h12 l6 52 h-24z" fill={`url(#tb-${side})`} />
-        {Array.from({ length: 8 }, (_, i) => (
-          <line key={i} x1={10 + i * 3} y1="52" x2={8 + i * 3.4} y2="84" stroke="#8a6420" strokeWidth="0.8" />
-        ))}
-      </svg>
-    </motion.div>
-  );
-}
-
-function Valance() {
-  return (
-    <div className="pointer-events-none absolute inset-x-0 top-0 z-[3]" aria-hidden>
-      <svg viewBox="0 0 600 60" preserveAspectRatio="none" className="h-[clamp(44px,8svh,72px)] w-full">
-        <defs>
-          <linearGradient id="val-fab" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0" stopColor="#d96a8e" />
-            <stop offset="1" stopColor="#f2a9bf" />
-          </linearGradient>
-          <linearGradient id="val-gold" x1="0" x2="1">
-            <stop offset="0" stopColor="#a87a26" />
-            <stop offset="0.5" stopColor="#f6dc8a" />
-            <stop offset="1" stopColor="#a87a26" />
-          </linearGradient>
-        </defs>
-        <path d={`M0 0 H600 V36 ${Array.from({ length: 10 }, (_, i) => `Q${600 - i * 60 - 30} 58 ${600 - (i + 1) * 60} 36`).join(' ')} Z`} fill="url(#val-fab)" />
-        <path d={`M600 36 ${Array.from({ length: 10 }, (_, i) => `Q${600 - i * 60 - 30} 58 ${600 - (i + 1) * 60} 36`).join(' ')}`} stroke="url(#val-gold)" strokeWidth="2.5" fill="none" />
-        {Array.from({ length: 10 }, (_, i) => (
-          <circle key={i} cx={30 + i * 60} cy="49" r="3.4" fill="url(#val-gold)" />
-        ))}
-      </svg>
-    </div>
-  );
-}
-
-export function Curtains({ open }: { open: boolean }) {
-  return (
-    <div className="pointer-events-none absolute inset-0 z-[2]">
-      <Panel side="left" open={open} />
-      <Panel side="right" open={open} />
-      {open && <Tieback side="left" />}
-      {open && <Tieback side="right" />}
-      <Valance />
-    </div>
-  );
-}
+export { Curtains } from './curtains';
 
 /* ───────── “You are invited” frame ───────── */
 export function InvitedFrame() {
@@ -226,7 +141,7 @@ export function SealButton({ show, onOpen }: { show: boolean; onOpen: () => void
           exit={{ opacity: 0, scale: 1.25 }}
           transition={{ duration: 0.5 }}
         >
-          <p className="mb-5 font-deva text-[clamp(1rem,4.4vw,1.4rem)] text-[#fff3d6] drop-shadow">॥ शुभ विवाह ॥</p>
+          <p className="foil-text mb-5 font-deva text-[clamp(1.1rem,4.8vw,1.5rem)] drop-shadow">॥ शुभ विवाह ॥</p>
           <motion.button
             onClick={onOpen}
             aria-label="Open the invitation"
@@ -235,8 +150,8 @@ export function SealButton({ show, onOpen }: { show: boolean; onOpen: () => void
             whileTap={{ scale: 0.9 }}
             className="relative"
           >
-            <span className="absolute inset-0 rounded-full bg-[#ffd6e0]/50 blur-xl" />
-            <WaxSeal className="relative w-[clamp(96px,28vw,140px)] drop-shadow-[0_10px_16px_rgba(70,0,20,0.45)]" />
+            <span className="absolute inset-0 rounded-full bg-[#ffe7a6]/40 blur-xl" />
+            <WaxSeal tone="gold" className="relative w-[clamp(96px,28vw,140px)] drop-shadow-[0_12px_18px_rgba(0,0,0,0.5)]" />
           </motion.button>
           <button
             onClick={onOpen}
