@@ -5,6 +5,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ART, COUPLE } from './config';
 import { Birds, CoverPainting, InvitedFrame, useImage } from './opening';
 import { Doors } from './doors';
+import { Opening3D, webglAvailable } from './three/Opening3D';
 import { Flourish } from './ornaments';
 
 function useViewport() {
@@ -26,6 +27,10 @@ export function Hero({ skip, onOpen }: { skip: boolean; onOpen: () => void }) {
   const hasArt = useImage(ART.cover);
   const [opened, setOpened] = useState(skip);
   const [settled, setSettled] = useState(skip);
+  // real-time 3D opening when the device supports it; the CSS doors are the fallback
+  const [mode, setMode] = useState<'3d' | 'css'>(() => (!skip && webglAvailable() ? '3d' : 'css'));
+  const [revealed, setRevealed] = useState(skip);
+  const shown = mode === '3d' ? revealed : opened;
   const [scrolled, setScrolled] = useState(false);
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
@@ -67,13 +72,18 @@ export function Hero({ skip, onOpen }: { skip: boolean; onOpen: () => void }) {
     if (opened) return;
     setOpened(true);
     onOpen();
-    setTimeout(() => setSettled(true), 3200);
+    if (mode === 'css') setTimeout(() => setSettled(true), 3200);
+  };
+  const onRevealed = () => {
+    setRevealed(true);
+    setTimeout(() => setSettled(true), 1400);
   };
 
   const line = (d: number) => ({ style: { opacity: textIn, y: textY }, transition: { delay: d } });
 
   return (
     <div ref={ref} className="relative" style={{ height: '260svh' }}>
+      {mode === '3d' && !revealed && <Opening3D onOpen={open} onDone={onRevealed} onFail={() => setMode('css')} />}
       <div className="paper sticky top-0 h-[100svh] overflow-hidden">
         {/* wide screens: blurred painting fills the sides while it's full screen */}
         <motion.div className="absolute inset-0" style={{ opacity: bgBlurO }}>
@@ -103,13 +113,13 @@ export function Hero({ skip, onOpen }: { skip: boolean; onOpen: () => void }) {
             <motion.div
               className="absolute inset-x-0 top-[13svh] z-[1]"
               initial={false}
-              animate={opened ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: -16, scale: 0.94 }}
-              transition={{ duration: 1.2, delay: opened && !skip ? 2 : 0 }}
+              animate={shown ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: -16, scale: 0.94 }}
+              transition={{ duration: 1.2, delay: shown && !skip ? (mode === '3d' ? 0.2 : 2) : 0 }}
             >
               <InvitedFrame />
             </motion.div>
-            <Doors open={opened} onOpen={open} skip={skip} />
-            {opened && !skip && <Birds />}
+            {mode === 'css' && <Doors open={opened} onOpen={open} skip={skip} />}
+            {shown && !skip && <Birds />}
           </motion.div>
         </motion.div>
 

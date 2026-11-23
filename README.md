@@ -2,7 +2,7 @@
 
 A 3D wedding invitation card that comes alive as you scroll.
 
-- **Opening.** Closed royal palace doors in maroon velvet with gold zardozi panels, brass ring knockers and a gold **SK** wax seal on the seam. Tap and the seal cracks in two (each half stays on its own door), the doors swing open in 3D, golden light and gold dust pour through, and the view glides forward into the painting of Sakshi & Kevin on the palace terrace.
+- **Opening (real-time 3D).** A WebGL (three.js) scene: a candle-lit marble palace wall with a gold arched doorway, carved jali, pillars and maroon doors with raised gold zardozi that catches the light. Tap and the 3D gold **SK** seal cracks in two, the doors swing open, warm light and gold dust pour through, and the camera glides through the doorway into the painting of Sakshi & Kevin. Devices without WebGL get a CSS version of the doors.
 - **Scroll.** The painted scene softly blurs and the 3D card rises up from below.
 - **3D booklet.** Each scroll flips the current page up and over to reveal the next one:
   1. Cover: S & K monogram in gold foil
