@@ -76,7 +76,8 @@ export const VENUE = {
   name: 'Celebration Lawn',
   area: 'Borivali, Mumbai',
   /** Google Maps link for “Open live location” */
-  mapsUrl: 'https://maps.app.goo.gl/CQAQLonroFgD3Fwd7',
+  mapsUrl:
+    'https://www.google.com/maps/place/Celebration+Lawn+Borivali/@19.2488106,72.8452875,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7b11f83bb2f2f:0xf5f4c23d49c3397!8m2!3d19.2488106!4d72.8452875!16s%2Fg%2F11lnhmdzvj',
 };
 
 /** ✏️ Optional: put photos in public/photos and list them, e.g. '/photos/1.jpg' — adds a gallery page */
