@@ -8,9 +8,12 @@ export const COUPLE = {
   bride: 'Sakshi',
   groom: 'Kevin',
   monogram: ['S', 'K'] as const,
-  // ✏️ parents’ names
-  brideParents: 'Daughter of Mrs. & Mr. Satra',
-  groomParents: "Son of Mrs. & Mr. Kevin's Family",
+  brideFamily: [
+    'Granddaughter of Vimlaben Vasanji Satra',
+    'Daughter of Mrs. Anita Satra & Mr. Ashwin Satra',
+    'Village – Gundala',
+  ],
+  groomFamily: ['Grandson of Zaverben Champshi Gala'],
 };
 
 export const BLESSING =
@@ -61,7 +64,7 @@ export const EVENTS: EventItem[] = [
     hindi: 'विवाह',
     day: 'Day Two',
     time: '8:00 pm onwards',
-    place: 'Venue to be announced',
+    place: 'Celebration Lawn, Borivali',
     line: 'The vow that begins our forever.',
     dress: 'Ivory, Red & Emerald · royal silks, heavy gold',
     swatches: ['#9E2B3A', '#F3E6CC', '#3E7B5B'],
@@ -70,11 +73,10 @@ export const EVENTS: EventItem[] = [
 ];
 
 export const VENUE = {
-  // ✏️ venue
-  name: 'Venue Name',
-  area: 'City, State',
-  /** text Google Maps should search for */
-  mapQuery: '',
+  name: 'Celebration Lawn',
+  area: 'Borivali, Mumbai',
+  /** Google Maps link for “Open live location” */
+  mapsUrl: 'https://maps.app.goo.gl/CQAQLonroFgD3Fwd7',
 };
 
 /** ✏️ Optional: put photos in public/photos and list them, e.g. '/photos/1.jpg' — adds a gallery page */

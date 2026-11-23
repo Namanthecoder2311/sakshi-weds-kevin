@@ -46,15 +46,21 @@ export function Blessing() {
     <section className="px-6 pt-10 text-center">
       <Reveal>
         <p className="font-deva text-lg text-[#9c2b45]">॥ श्री गणेशाय नमः ॥</p>
-        <div className="mx-auto mt-6 grid max-w-md grid-cols-2 gap-4 text-[#5a4044]">
-          <p>
-            <span className="font-script text-3xl text-[#9c1f45]">{COUPLE.bride}</span>
-            <span className="mt-1 block font-serif text-xs text-[#8a7470] italic">{COUPLE.brideParents}</span>
-          </p>
-          <p>
-            <span className="font-script text-3xl text-[#9c1f45]">{COUPLE.groom}</span>
-            <span className="mt-1 block font-serif text-xs text-[#8a7470] italic">{COUPLE.groomParents}</span>
-          </p>
+        <p className="caps-label mt-1 text-[0.62rem]! text-[#b8893a]">Shree Ganeshay Namah</p>
+        <div className="mx-auto mt-8 max-w-md text-[#5a4044]">
+          <p className="font-script text-[2.6rem] leading-none text-[#9c1f45]">{COUPLE.bride}</p>
+          {COUPLE.brideFamily.map((l) => (
+            <p key={l} className="mt-1 font-serif text-[0.85rem] text-[#7a6266] italic">
+              {l}
+            </p>
+          ))}
+          <p className="my-4 font-script text-2xl text-[#b8893a]">with</p>
+          <p className="font-script text-[2.6rem] leading-none text-[#9c1f45]">{COUPLE.groom}</p>
+          {COUPLE.groomFamily.map((l) => (
+            <p key={l} className="mt-1 font-serif text-[0.85rem] text-[#7a6266] italic">
+              {l}
+            </p>
+          ))}
         </div>
       </Reveal>
       <Reveal className="mx-auto mt-8 max-w-sm font-serif text-[1rem] leading-relaxed text-[#4a3a3e]" delay={0.1}>
@@ -236,7 +242,7 @@ export function DressCode() {
 
 /* ───────── venue ───────── */
 export function Venue() {
-  const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(VENUE.mapQuery || VENUE.name)}`;
+  const maps = VENUE.mapsUrl;
   const hasArt = useImage(ART.cover);
   return (
     <section>
