@@ -47,6 +47,9 @@ export function Blessing() {
       <Reveal>
         <p className="font-deva text-lg text-[#9c2b45]">॥ श्री गणेशाय नमः ॥</p>
         <p className="caps-label mt-1 text-[0.62rem]! text-[#b8893a]">Shree Ganeshay Namah</p>
+        <p className="mx-auto mt-6 max-w-xs font-script text-[1.6rem] leading-snug text-[#9c1f45]">
+          “Two hearts found their way to each other, and now begins a journey of …… Forever”
+        </p>
         <div className="mx-auto mt-8 max-w-md text-[#5a4044]">
           {/* bride: family lines above her name; groom: name first, then family lines */}
           {COUPLE.brideFamily.map((l) => (
