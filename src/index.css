@@ -11,13 +11,10 @@
 @layer base {
   html {
     -webkit-tap-highlight-color: transparent;
-    background: #1a0a0e;
-  }
-  html.snap {
-    scroll-snap-type: y proximity;
+    background: #fbf7f1;
   }
   body {
-    background: #1a0a0e;
+    background: #fbf7f1;
     color: #3d2430;
     font-family: var(--font-serif);
     overflow-x: hidden;
@@ -123,4 +120,24 @@
     animation-iteration-count: 1 !important;
   }
   .petal { display: none; }
+}
+
+/* ── reel-style page ───────────────────────── */
+.paper {
+  background-color: #fbf7f1;
+  background-image:
+    radial-gradient(900px 500px at 0% 0%, rgba(244, 182, 200, 0.16), transparent 60%),
+    radial-gradient(800px 500px at 100% 40%, rgba(231, 201, 119, 0.12), transparent 60%),
+    radial-gradient(circle at 1px 1px, rgba(120, 90, 60, 0.05) 1px, transparent 1.3px);
+  background-size: auto, auto, 5px 5px;
+}
+.caps-label {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+}
+.title-rose {
+  text-shadow: 0 2px 0 rgba(156, 31, 69, 0.1), 0 8px 22px rgba(156, 31, 69, 0.16);
 }

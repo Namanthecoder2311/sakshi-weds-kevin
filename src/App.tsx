@@ -1,13 +1,20 @@
 import { useRef, useState } from 'react';
-import { Scene3D } from './invite/Scene3D';
+import { Hero } from './invite/Hero';
+import { Blessing, Celebrations, Divider, DressCode, Gallery, Hearts, Match, ThankYou, Venue } from './invite/Sections';
 import { MUSIC } from './invite/config';
 
 export default function App() {
-  // `?open` jumps straight to the card (handy for re-visits and previews)
+  // `?open` skips the curtains (handy for re-visits and previews)
   const skip = typeof location !== 'undefined' && new URLSearchParams(location.search).has('open');
   const audio = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
 
+  const startMusic = () => {
+    const a = audio.current;
+    if (!MUSIC || !a) return;
+    a.volume = 0.5;
+    void a.play().then(() => setPlaying(true)).catch(() => {});
+  };
   const toggle = () => {
     const a = audio.current;
     if (!a) return;
@@ -19,17 +26,22 @@ export default function App() {
   };
 
   return (
-    <main>
-      <Scene3D
-        skip={skip}
-        onOpen={() => {
-          const a = audio.current;
-          if (MUSIC && a) {
-            a.volume = 0.5;
-            void a.play().then(() => setPlaying(true)).catch(() => {});
-          }
-        }}
-      />
+    <main className="paper">
+      <Hero skip={skip} onOpen={startMusic} />
+      <Blessing />
+      <Divider />
+      <Match />
+      <Divider />
+      <Hearts />
+      <Divider />
+      <Celebrations />
+      <Divider />
+      <DressCode />
+      <Divider />
+      <Venue />
+      <Gallery />
+      <ThankYou />
+
       <div className="pointer-events-none fixed inset-0 z-30 overflow-hidden" aria-hidden>
         {Array.from({ length: 14 }, (_, i) => (
           <span
@@ -44,7 +56,7 @@ export default function App() {
             }}
           >
             <svg viewBox="0 0 12 16" style={{ width: 8 + (i % 3) * 3 }}>
-              <path d="M6 0 C12 5 11 12 6 16 C1 12 0 5 6 0Z" fill={['#e98aa5', '#f4b6c8', '#c9425f', '#f8cdd8'][i % 4]} />
+              <path d="M6 0 C12 5 11 12 6 16 C1 12 0 5 6 0Z" fill={['#e98aa5', '#f4b6c8', '#f08fb0', '#f8cdd8'][i % 4]} />
             </svg>
           </span>
         ))}
@@ -55,7 +67,7 @@ export default function App() {
           <button
             onClick={toggle}
             aria-label={playing ? 'Pause music' : 'Play music'}
-            className="fixed top-4 right-4 z-40 grid h-11 w-11 place-items-center rounded-full border border-[#e7c977]/60 bg-black/30 text-[#f3e3c3] backdrop-blur"
+            className="fixed right-4 bottom-4 z-40 grid h-11 w-11 place-items-center rounded-full border border-[#e7c977]/70 bg-white/85 text-[#9c1f45] shadow-lg backdrop-blur"
           >
             {playing ? '❚❚' : '♪'}
           </button>
