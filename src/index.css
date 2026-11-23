@@ -175,3 +175,17 @@
   0% { background-position: 140% 0; }
   55%, 100% { background-position: -40% 0; }
 }
+
+/* ── gallery ───────────────────────────────── */
+.photo-reflect {
+  -webkit-box-reflect: below 10px linear-gradient(transparent 72%, rgba(255, 255, 255, 0.22));
+}
+.photo-sweep {
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 250, 235, 0.32) 46%, transparent 60%);
+  background-size: 250% 100%;
+  animation: photo-sweep 4.2s ease-in-out infinite;
+}
+@keyframes photo-sweep {
+  0% { background-position: 150% 0; }
+  60%, 100% { background-position: -50% 0; }
+}

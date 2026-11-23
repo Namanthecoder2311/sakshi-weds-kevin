@@ -81,8 +81,13 @@ export const VENUE = {
     'https://www.google.com/maps/place/Celebration+Lawn+Borivali/@19.2488106,72.8452875,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7b11f83bb2f2f:0xf5f4c23d49c3397!8m2!3d19.2488106!4d72.8452875!16s%2Fg%2F11lnhmdzvj',
 };
 
-/** ✏️ Optional: put photos in public/photos and list them, e.g. '/photos/1.jpg' — adds a gallery page */
-export const PHOTOS: string[] = [];
+/** Photos for the “Our Moments” gallery (public/photos). ✏️ captions are editable. */
+export const PHOTOS: { src: string; caption: string; pos: string }[] = [
+  { src: '/photos/1.webp', caption: 'Mountains & us', pos: '50% 55%' },
+  { src: '/photos/2.webp', caption: 'Hold me close', pos: '50% 50%' },
+  { src: '/photos/3.webp', caption: 'Our date night', pos: '50% 38%' },
+  { src: '/photos/4.webp', caption: 'Sail away with me', pos: '50% 42%' },
+];
 
 /** ✏️ Optional background song: drop an mp3 at public/music.mp3 and set '/music.mp3' */
 export const MUSIC = '';

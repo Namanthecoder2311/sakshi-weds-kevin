@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { Hero } from './invite/Hero';
-import { Celebrations, Divider, DressCode, Families, Gallery, Hearts, Match, ThankYou, Venue } from './invite/Sections';
+import { Celebrations, Divider, DressCode, Families, Hearts, Match, ThankYou, Venue } from './invite/Sections';
+import { Gallery } from './invite/Gallery';
 import { MUSIC } from './invite/config';
 
 export default function App() {
@@ -40,6 +41,7 @@ export default function App() {
       <DressCode />
       <Divider />
       <Venue />
+      <Divider />
       <Gallery />
       <ThankYou />
 

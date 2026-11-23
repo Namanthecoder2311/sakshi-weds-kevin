@@ -2,7 +2,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { useEffect, useRef, useState } from 'react';
-import { ART, COUPLE, EVENTS, PHOTOS, THANK_YOU, VENUE, type EventItem } from './config';
+import { ART, COUPLE, EVENTS, THANK_YOU, VENUE, type EventItem } from './config';
 import { EventIcon, Flourish, WaxSeal } from './ornaments';
 import { CoverPainting, useImage } from './opening';
 import { Scratch } from './Scratch';
@@ -265,23 +265,6 @@ export function Venue() {
           Open live location
         </a>
       </Reveal>
-    </section>
-  );
-}
-
-/* ───────── gallery (only when photos exist) ───────── */
-export function Gallery() {
-  if (!PHOTOS.length) return null;
-  return (
-    <section>
-      <Heading eyebrow="Captured moments" title="Our Gallery" />
-      <div className="mx-auto mt-8 flex w-full max-w-2xl snap-x snap-mandatory gap-4 overflow-x-auto px-[14%] pb-4 [scrollbar-width:none]">
-        {PHOTOS.map((src, i) => (
-          <div key={src} className="aspect-[4/5] w-[72%] shrink-0 snap-center overflow-hidden rounded-[1.4rem] bg-white p-1.5 shadow-lg">
-            <img src={src} alt={`Photo ${i + 1}`} className="h-full w-full rounded-[1.1rem] object-cover" />
-          </div>
-        ))}
-      </div>
     </section>
   );
 }
