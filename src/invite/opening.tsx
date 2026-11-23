@@ -1,8 +1,7 @@
-// The 1.mp4-style opening: closed pink curtains → part & tie back → the painted couple scene.
-import { AnimatePresence, motion } from 'framer-motion';
+// Shared opening pieces: image loader, cover painting, “You are invited” frame and birds.
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { ART, COUPLE } from './config';
-import { WaxSeal } from './ornaments';
 
 /** true once loaded, false if missing, null while checking */
 export function useImage(src?: string) {
@@ -90,8 +89,6 @@ export function CoverPainting({ className }: { className?: string }) {
   );
 }
 
-export { Curtains } from './curtains';
-
 /* ───────── “You are invited” frame ───────── */
 export function InvitedFrame() {
   return (
@@ -128,39 +125,5 @@ export function Birds() {
         </motion.svg>
       ))}
     </div>
-  );
-}
-
-/* ───────── seal + button on the closed curtains ───────── */
-export function SealButton({ show, onOpen }: { show: boolean; onOpen: () => void }) {
-  return (
-    <AnimatePresence>
-      {show && (
-        <motion.div
-          className="absolute inset-0 z-[5] flex flex-col items-center justify-center"
-          exit={{ opacity: 0, scale: 1.25 }}
-          transition={{ duration: 0.5 }}
-        >
-          <p className="foil-text mb-5 font-deva text-[clamp(1.1rem,4.8vw,1.5rem)] drop-shadow">॥ शुभ विवाह ॥</p>
-          <motion.button
-            onClick={onOpen}
-            aria-label="Open the invitation"
-            animate={{ scale: [1, 1.06, 1] }}
-            transition={{ repeat: Infinity, duration: 2.4, ease: 'easeInOut' }}
-            whileTap={{ scale: 0.9 }}
-            className="relative"
-          >
-            <span className="absolute inset-0 rounded-full bg-[#ffe7a6]/40 blur-xl" />
-            <WaxSeal tone="gold" className="relative w-[clamp(96px,28vw,140px)] drop-shadow-[0_12px_18px_rgba(0,0,0,0.5)]" />
-          </motion.button>
-          <button
-            onClick={onOpen}
-            className="mt-5 rounded-full bg-[#fffaf6]/92 px-7 py-2.5 font-script text-[clamp(1.5rem,6vw,2rem)] leading-none text-[#4a3036] shadow-[0_8px_24px_rgba(90,20,40,0.25)]"
-          >
-            Open the invitation
-          </button>
-        </motion.div>
-      )}
-    </AnimatePresence>
   );
 }

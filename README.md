@@ -2,7 +2,7 @@
 
 A 3D wedding invitation card that comes alive as you scroll.
 
-- **Opening (like reel 1).** Closed pink curtains with a red **SK** wax seal. Tap "Open the invitation" and the curtains part and tie back with gold tassels, birds fly off, and Sakshi & Kevin appear from behind on the palace terrace under a "You are invited" frame.
+- **Opening.** Closed royal palace doors in maroon velvet with gold zardozi panels, brass ring knockers and a gold **SK** wax seal on the seam. Tap and the seal cracks in two (each half stays on its own door), the doors swing open in 3D, golden light and gold dust pour through, and the view glides forward into the painting of Sakshi & Kevin on the palace terrace.
 - **Scroll.** The painted scene softly blurs and the 3D card rises up from below.
 - **3D booklet.** Each scroll flips the current page up and over to reveal the next one:
   1. Cover: S & K monogram in gold foil

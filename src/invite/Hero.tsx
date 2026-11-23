@@ -1,9 +1,10 @@
-// Curtains → painted couple → (on scroll) the painting shrinks into a palace-arch window
+// Palace doors → painted couple → (on scroll) the painting shrinks into a palace-arch window
 // and “The wedding of Sakshi with Kevin” writes itself in beneath it.
 import { motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ART, COUPLE } from './config';
-import { Birds, CoverPainting, Curtains, InvitedFrame, SealButton, useImage } from './opening';
+import { Birds, CoverPainting, InvitedFrame, useImage } from './opening';
+import { Doors } from './doors';
 import { Flourish } from './ornaments';
 
 function useViewport() {
@@ -66,7 +67,7 @@ export function Hero({ skip, onOpen }: { skip: boolean; onOpen: () => void }) {
     if (opened) return;
     setOpened(true);
     onOpen();
-    setTimeout(() => setSettled(true), 2600);
+    setTimeout(() => setSettled(true), 3200);
   };
 
   const line = (d: number) => ({ style: { opacity: textIn, y: textY }, transition: { delay: d } });
@@ -84,22 +85,30 @@ export function Hero({ skip, onOpen }: { skip: boolean; onOpen: () => void }) {
           className="absolute overflow-hidden shadow-[0_24px_60px_-20px_rgba(90,40,30,0.55)]"
           style={{ left, top, width, height, borderTopLeftRadius: radius, borderTopRightRadius: radius, borderRadius: radius }}
         >
-          {hasArt ? (
-            <img src={ART.cover} alt={`${COUPLE.bride} and ${COUPLE.groom} on the palace terrace`} className="h-full w-full object-cover object-[50%_72%]" />
-          ) : (
-            <CoverPainting className="h-full w-full" />
-          )}
+          {/* camera push-in: the painting glides forward as the doors open */}
+          <motion.div
+            className="h-full w-full"
+            initial={false}
+            animate={opened ? { scale: 1, filter: 'brightness(1) blur(0px)' } : { scale: 1.32, filter: 'brightness(0.55) blur(2px)' }}
+            transition={{ duration: skip ? 0 : 3, ease: [0.25, 0.1, 0.2, 1], delay: opened && !skip ? 0.5 : 0 }}
+          >
+            {hasArt ? (
+              <img src={ART.cover} alt={`${COUPLE.bride} and ${COUPLE.groom} on the palace terrace`} className="h-full w-full object-cover object-[50%_72%]" />
+            ) : (
+              <CoverPainting className="h-full w-full" />
+            )}
+          </motion.div>
           {/* the 1.mp4 opening, which fades out as the painting is framed */}
           <motion.div className="absolute inset-0" style={{ opacity: openingO }}>
             <motion.div
               className="absolute inset-x-0 top-[13svh] z-[1]"
               initial={false}
               animate={opened ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: -16, scale: 0.94 }}
-              transition={{ duration: 1.2, delay: opened && !skip ? 1.2 : 0 }}
+              transition={{ duration: 1.2, delay: opened && !skip ? 2 : 0 }}
             >
               <InvitedFrame />
             </motion.div>
-            <Curtains open={opened} />
+            <Doors open={opened} onOpen={open} skip={skip} />
             {opened && !skip && <Birds />}
           </motion.div>
         </motion.div>
@@ -110,7 +119,6 @@ export function Hero({ skip, onOpen }: { skip: boolean; onOpen: () => void }) {
           style={{ left, top, width, height, borderRadius: radius, opacity: frameO, scale: 1.035 }}
         />
 
-        <SealButton show={!opened} onOpen={open} />
 
         {/* names appear beneath the arch */}
         <div className="absolute inset-x-0 px-6 text-center" style={{ top: archTop + archH + h * 0.025 }}>
