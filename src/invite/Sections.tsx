@@ -44,6 +44,17 @@ function Divider() {
 export function Blessing() {
   return (
     <section className="px-6 pt-10 text-center">
+      <Reveal className="mx-auto max-w-sm font-serif text-[1rem] leading-relaxed text-[#4a3a3e]">
+        {BLESSING}
+      </Reveal>
+    </section>
+  );
+}
+
+/* ───────── Shree Ganeshay Namah + families ───────── */
+export function Families() {
+  return (
+    <section className="px-6 text-center">
       <Reveal>
         <p className="font-deva text-lg text-[#9c2b45]">॥ श्री गणेशाय नमः ॥</p>
         <p className="caps-label mt-1 text-[0.62rem]! text-[#b8893a]">Shree Ganeshay Namah</p>
@@ -66,9 +77,6 @@ export function Blessing() {
             </p>
           ))}
         </div>
-      </Reveal>
-      <Reveal className="mx-auto mt-8 max-w-sm font-serif text-[1rem] leading-relaxed text-[#4a3a3e]" delay={0.1}>
-        {BLESSING}
       </Reveal>
     </section>
   );
