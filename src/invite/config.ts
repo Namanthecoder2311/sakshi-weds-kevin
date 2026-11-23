@@ -9,7 +9,7 @@ export const COUPLE = {
   groom: 'Kevin',
   monogram: ['S', 'K'] as const,
   brideFamily: [
-    'Grand-daughter of Vimlaben Vasanji Satra',
+    'Granddaughter of Vimlaben Vasanji Satra',
     'Daughter of Mrs. Anita Satra & Mr. Ashwin Satra',
     'Village – Gundala',
   ],
