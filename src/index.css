@@ -114,13 +114,7 @@
   100% { transform: translate3d(var(--drift, 40px), 105vh, 0) rotate(var(--spin, 400deg)); opacity: 0; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-  }
-  .petal { display: none; }
-}
+/* Animations always play, even when the device asks for reduced motion (owner's choice). */
 
 /* ── reel-style page ───────────────────────── */
 .paper {
