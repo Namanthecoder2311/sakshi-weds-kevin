@@ -6,6 +6,8 @@ import { ART, COUPLE } from './config';
 import { Birds, CoverPainting, InvitedFrame, useImage } from './opening';
 import { Doors } from './doors';
 import { Opening3D, webglAvailable } from './three/Opening3D';
+import { LivingPainting } from './three/LivingPainting';
+import { GoldSparkles, SkyBirds } from './ambient';
 import { Flourish } from './ornaments';
 
 function useViewport() {
@@ -103,11 +105,17 @@ export function Hero({ skip, onOpen }: { skip: boolean; onOpen: () => void }) {
             transition={{ duration: skip ? 0 : 3, ease: [0.25, 0.1, 0.2, 1], delay: opened && !skip ? 0.5 : 0 }}
           >
             {hasArt ? (
-              <img src={ART.cover} alt={`${COUPLE.bride} and ${COUPLE.groom} on the palace terrace`} className="h-full w-full object-cover object-[50%_72%]" />
+              <LivingPainting className="h-full w-full" />
             ) : (
               <CoverPainting className="h-full w-full" />
             )}
           </motion.div>
+          {shown && (
+            <>
+              <SkyBirds />
+              <GoldSparkles />
+            </>
+          )}
           {/* the 1.mp4 opening, which fades out as the painting is framed */}
           <motion.div className="absolute inset-0" style={{ opacity: openingO }}>
             <motion.div
@@ -116,7 +124,9 @@ export function Hero({ skip, onOpen }: { skip: boolean; onOpen: () => void }) {
               animate={shown ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: -16, scale: 0.94 }}
               transition={{ duration: 1.2, delay: shown && !skip ? (mode === '3d' ? 0.2 : 2) : 0 }}
             >
-              <InvitedFrame />
+              <motion.div animate={{ y: [0, -6, 0] }} transition={{ repeat: Infinity, duration: 4.5, ease: 'easeInOut' }}>
+                <InvitedFrame />
+              </motion.div>
             </motion.div>
             {mode === 'css' && <Doors open={opened} onOpen={open} skip={skip} />}
             {shown && !skip && <Birds />}

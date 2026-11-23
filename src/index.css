@@ -160,3 +160,24 @@
   0% { background-position: 130% 0; }
   60%, 100% { background-position: -30% 0; }
 }
+
+/* ── living painting extras ─────────────────── */
+.bird-wing {
+  transform-box: fill-box;
+  transform-origin: 50% 70%;
+  animation: bird-flap 0.42s ease-in-out infinite alternate;
+}
+@keyframes bird-flap {
+  from { transform: scaleY(1); }
+  to { transform: scaleY(-0.55); }
+}
+.frame-shimmer {
+  background: linear-gradient(110deg, transparent 35%, rgba(255, 244, 210, 0.75) 48%, rgba(233, 201, 119, 0.35) 52%, transparent 65%);
+  background-size: 260% 100%;
+  mix-blend-mode: soft-light;
+  animation: frame-shimmer 5.5s ease-in-out infinite;
+}
+@keyframes frame-shimmer {
+  0% { background-position: 140% 0; }
+  55%, 100% { background-position: -40% 0; }
+}

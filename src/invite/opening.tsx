@@ -92,8 +92,10 @@ export function CoverPainting({ className }: { className?: string }) {
 /* ───────── “You are invited” frame ───────── */
 export function InvitedFrame() {
   return (
-    <div className="relative mx-auto w-[min(76vw,380px)] rounded-[999px] border-2 border-[#c9a24a] bg-[#fbf7f0]/88 px-6 py-[clamp(14px,2.6svh,26px)] text-center shadow-[0_10px_30px_rgba(90,60,30,0.18)] backdrop-blur-[2px]">
+    <div className="relative mx-auto w-[min(76vw,380px)] overflow-hidden rounded-[999px] border-2 border-[#c9a24a] bg-[#fbf7f0]/88 px-6 py-[clamp(14px,2.6svh,26px)] text-center shadow-[0_10px_30px_rgba(90,60,30,0.18)] backdrop-blur-[2px]">
       <div className="pointer-events-none absolute inset-[5px] rounded-[999px] border border-[#d8bd8c]" />
+      {/* gold foil shimmer sweeping across the frame */}
+      <div className="frame-shimmer pointer-events-none absolute inset-0 overflow-hidden rounded-[999px]" />
       <p className="font-display text-[clamp(1.5rem,6.6vw,2.3rem)] leading-[1.1] font-medium tracking-[0.18em] text-[#9d8a72] uppercase">
         You are
         <br />
