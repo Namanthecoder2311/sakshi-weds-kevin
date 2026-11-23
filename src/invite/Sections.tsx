@@ -48,7 +48,7 @@ export function Blessing() {
         <p className="font-deva text-lg text-[#9c2b45]">॥ श्री गणेशाय नमः ॥</p>
         <p className="caps-label mt-1 text-[0.62rem]! text-[#b8893a]">Shree Ganeshay Namah</p>
         <div className="mx-auto mt-8 max-w-md text-[#5a4044]">
-          {/* family lines come first, then the name — the traditional order */}
+          {/* bride: family lines above her name; groom: name first, then family lines */}
           {COUPLE.brideFamily.map((l) => (
             <p key={l} className="mt-1 font-serif text-[0.85rem] text-[#7a6266] italic">
               {l}
@@ -56,12 +56,12 @@ export function Blessing() {
           ))}
           <p className="mt-3 font-script text-[2.6rem] leading-none text-[#9c1f45]">{COUPLE.bride}</p>
           <p className="my-4 font-script text-2xl text-[#b8893a]">with</p>
+          <p className="font-script text-[2.6rem] leading-none text-[#9c1f45]">{COUPLE.groom}</p>
           {COUPLE.groomFamily.map((l) => (
             <p key={l} className="mt-1 font-serif text-[0.85rem] text-[#7a6266] italic">
               {l}
             </p>
           ))}
-          <p className="mt-3 font-script text-[2.6rem] leading-none text-[#9c1f45]">{COUPLE.groom}</p>
         </div>
       </Reveal>
       <Reveal className="mx-auto mt-8 max-w-sm font-serif text-[1rem] leading-relaxed text-[#4a3a3e]" delay={0.1}>
