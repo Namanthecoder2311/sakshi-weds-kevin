@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { Hero } from './invite/Hero';
-import { Blessing, Celebrations, Divider, DressCode, Families, Gallery, Hearts, Match, ThankYou, Venue } from './invite/Sections';
+import { Celebrations, Divider, DressCode, Families, Gallery, Hearts, Match, ThankYou, Venue } from './invite/Sections';
 import { MUSIC } from './invite/config';
 
 export default function App() {
@@ -28,7 +28,6 @@ export default function App() {
   return (
     <main className="paper">
       <Hero skip={skip} onOpen={startMusic} />
-      <Blessing />
       <Divider />
       <Match />
       <Divider />

@@ -2,7 +2,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { useEffect, useRef, useState } from 'react';
-import { ART, BLESSING, COUPLE, EVENTS, PHOTOS, THANK_YOU, VENUE, type EventItem } from './config';
+import { ART, COUPLE, EVENTS, PHOTOS, THANK_YOU, VENUE, type EventItem } from './config';
 import { EventIcon, Flourish, WaxSeal } from './ornaments';
 import { CoverPainting, useImage } from './opening';
 import { Scratch } from './Scratch';
@@ -37,17 +37,6 @@ function Divider() {
     <Reveal className="my-16 flex justify-center">
       <Flourish className="w-56" />
     </Reveal>
-  );
-}
-
-/* ───────── blessing ───────── */
-export function Blessing() {
-  return (
-    <section className="px-6 pt-10 text-center">
-      <Reveal className="mx-auto max-w-sm font-serif text-[1rem] leading-relaxed text-[#4a3a3e]">
-        {BLESSING}
-      </Reveal>
-    </section>
   );
 }
 

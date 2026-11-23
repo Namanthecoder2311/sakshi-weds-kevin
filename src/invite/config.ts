@@ -20,9 +20,6 @@ export const COUPLE = {
   ],
 };
 
-export const BLESSING =
-  'With blessings as our crown, joy as our music and petals beneath our feet, we joyfully invite you to witness two souls becoming one.';
-
 export type EventItem = {
   id: 'haldi' | 'mehendi' | 'wedding';
   name: string;
