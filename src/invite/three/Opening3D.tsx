@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ART, COUPLE } from '../config';
 import { WaxSeal } from '../ornaments';
 import type { Palace } from './palace';
+import { GUEST } from '../guest';
 
 export function webglAvailable() {
   try {
@@ -81,10 +82,20 @@ export function Opening3D({ onOpen, onDone, onFail }: { onOpen: () => void; onDo
       <AnimatePresence>
         {ready && !opened && (
           <motion.div className="pointer-events-none absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.6 }}>
-            <div className="absolute inset-x-0 top-[5svh] flex justify-center">
+            <div className="absolute inset-x-0 top-[5svh] flex flex-col items-center px-6 text-center">
               <p className="rounded-full border border-[#d6ad5c]/60 bg-[#2a0610]/70 px-5 py-1.5 font-deva text-[clamp(0.95rem,4vw,1.3rem)] text-[#f3d98e] shadow-[0_6px_16px_rgba(0,0,0,0.5)] backdrop-blur-sm">
                 ॥ श्री गणेशाय नमः ॥
               </p>
+              {GUEST && (
+                <motion.p
+                  className="mt-3 font-script text-[clamp(1.5rem,6.4vw,2.1rem)] leading-none text-[#f6dc96] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.9 }}
+                >
+                  For {GUEST}
+                </motion.p>
+              )}
             </div>
             <div className="absolute inset-x-0 bottom-[7svh] flex flex-col items-center">
               <motion.button

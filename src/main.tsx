@@ -11,9 +11,10 @@ import '@fontsource/tiro-devanagari-hindi/400.css'
 import '@fontsource/cormorant-garamond/600.css'
 import './index.css'
 import App from './App.tsx'
+import { LinksAdmin } from './invite/LinksAdmin'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    {new URLSearchParams(location.search).has('links') ? <LinksAdmin /> : <App />}
   </StrictMode>,
 )

@@ -6,6 +6,7 @@ import { ART, COUPLE, EVENTS, THANK_YOU, VENUE, type EventItem } from './config'
 import { EventIcon, Flourish, WaxSeal } from './ornaments';
 import { CoverPainting, useImage } from './opening';
 import { Scratch } from './Scratch';
+import { GUEST } from './guest';
 
 /* ───────── shared bits ───────── */
 export function Reveal({ children, className, delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
@@ -283,6 +284,7 @@ export function ThankYou() {
       <div className="relative flex min-h-[100svh] flex-col items-center px-6 pt-[4svh] text-center">
         <Reveal className="w-full max-w-[300px] rounded-[1.6rem] bg-[#fffaf4]/88 px-6 py-5 shadow-[0_20px_50px_-25px_rgba(90,40,30,0.6)] ring-1 ring-[#e6d3b4] backdrop-blur-sm">
           <h2 className="font-script text-5xl text-[#9c1f45]">Thank You</h2>
+          {GUEST && <p className="mt-1 font-serif text-[0.95rem] text-[#7a6266] italic">Dear {GUEST},</p>}
           <p className="mt-2 font-serif text-[0.88rem] leading-relaxed text-[#4a3a3e]">{THANK_YOU}</p>
           <div className="mt-3 flex items-center justify-center gap-3">
             <p className="font-script text-2xl text-[#9c1f45]">

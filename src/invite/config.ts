@@ -89,8 +89,9 @@ export const PHOTOS: { src: string; caption: string; pos: string }[] = [
   { src: '/photos/4.webp', caption: 'Sail away with me', pos: '50% 42%' },
 ];
 
-/** ✏️ Optional background song: drop an mp3 at public/music.mp3 and set '/music.mp3' */
-export const MUSIC = '';
+/** Background song: drop an mp3 at public/music.mp3 — it plays (fading in) as the doors open.
+ *  If the file isn't there, the music button simply doesn't appear. */
+export const MUSIC = '/music.mp3';
 
 /** Paintings made with ChatGPT / Gemini (see ART_PROMPTS.md). Missing files fall back gracefully. */
 export const ART = {

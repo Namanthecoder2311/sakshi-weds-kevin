@@ -72,6 +72,8 @@ export function Hero({ skip, onOpen }: { skip: boolean; onOpen: () => void }) {
 
   const open = () => {
     if (opened) return;
+    // a little physical "crack" of the seal on phones that support it
+    navigator.vibrate?.([18, 40, 60]);
     setOpened(true);
     onOpen();
     if (mode === 'css') setTimeout(() => setSettled(true), 3200);

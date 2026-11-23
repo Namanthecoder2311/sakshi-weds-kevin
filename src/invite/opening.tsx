@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { ART, COUPLE } from './config';
+import { GUEST } from './guest';
 
 /** true once loaded, false if missing, null while checking */
 export function useImage(src?: string) {
@@ -96,6 +97,7 @@ export function InvitedFrame() {
       <div className="pointer-events-none absolute inset-[5px] rounded-[999px] border border-[#d8bd8c]" />
       {/* gold foil shimmer sweeping across the frame */}
       <div className="frame-shimmer pointer-events-none absolute inset-0 overflow-hidden rounded-[999px]" />
+      {GUEST && <p className="mb-1 font-script text-[clamp(1.15rem,5vw,1.6rem)] leading-tight text-[#9c1f45]">Dear {GUEST},</p>}
       <p className="font-display text-[clamp(1.5rem,6.6vw,2.3rem)] leading-[1.1] font-medium tracking-[0.18em] text-[#9d8a72] uppercase">
         You are
         <br />

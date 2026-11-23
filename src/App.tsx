@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Hero } from './invite/Hero';
 import { Celebrations, Divider, DressCode, Families, Hearts, Match, ThankYou, Venue } from './invite/Sections';
 import { Gallery } from './invite/Gallery';
@@ -9,17 +9,48 @@ export default function App() {
   const skip = typeof location !== 'undefined' && new URLSearchParams(location.search).has('open');
   const audio = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
+  const [hasMusic, setHasMusic] = useState(false);
+
+  // only show the music button when a song has actually been added
+  useEffect(() => {
+    if (!MUSIC) return;
+    fetch(MUSIC, { method: 'HEAD' })
+      .then((r) => setHasMusic(r.ok && (r.headers.get('content-type') ?? '').startsWith('audio')))
+      .catch(() => {});
+  }, []);
+
+  // soft fade-in so the music swells as the doors open
+  const fadeTo = (a: HTMLAudioElement, target: number, ms: number) => {
+    const start = a.volume;
+    const t0 = performance.now();
+    const step = (now: number) => {
+      const k = Math.min(1, (now - t0) / ms);
+      a.volume = start + (target - start) * k;
+      if (k < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
 
   const startMusic = () => {
     const a = audio.current;
-    if (!MUSIC || !a) return;
-    a.volume = 0.5;
-    void a.play().then(() => setPlaying(true)).catch(() => {});
+    if (!hasMusic || !a) return;
+    a.volume = 0;
+    void a
+      .play()
+      .then(() => {
+        setPlaying(true);
+        fadeTo(a, 0.55, 3500);
+      })
+      .catch(() => {});
   };
   const toggle = () => {
     const a = audio.current;
     if (!a) return;
-    if (a.paused) void a.play().then(() => setPlaying(true));
+    if (a.paused)
+      void a.play().then(() => {
+        setPlaying(true);
+        fadeTo(a, 0.55, 1200);
+      });
     else {
       a.pause();
       setPlaying(false);
@@ -64,7 +95,7 @@ export default function App() {
           </span>
         ))}
       </div>
-      {MUSIC && (
+      {hasMusic && (
         <>
           <audio ref={audio} src={MUSIC} loop preload="auto" />
           <button
