@@ -113,12 +113,16 @@ export function InvitedFrame() {
       <div className="relative">
         {GUEST && <p className="mb-2 font-display text-[clamp(1.15rem,5vw,1.5rem)] leading-tight font-bold text-[#8e1d3d] italic">Dear {GUEST},</p>}
         <GoldRule />
-        <p className="bg-[linear-gradient(110deg,#6e4a18,#b8893a_45%,#7a5420)] bg-clip-text font-display text-[clamp(1.35rem,6vw,2.1rem)] leading-none font-bold tracking-[0.14em] text-transparent uppercase">
+        <p className="bg-[linear-gradient(110deg,#6e4a18,#b8893a_45%,#7a5420)] bg-clip-text font-display text-[clamp(1.2rem,5.2vw,1.8rem)] leading-none font-bold tracking-[0.24em] text-transparent uppercase">
           You are invited
         </p>
-        <p className="mt-2 font-serif text-[clamp(0.85rem,3.6vw,1rem)] font-medium text-[#5a3940] italic">to celebrate the wedding of</p>
-        <p className="mt-1 font-script text-[clamp(2.4rem,10.5vw,3.4rem)] leading-[1.05] text-[#9c1f45] [text-shadow:0_2px_10px_rgba(255,255,255,0.8)]">
-          {COUPLE.bride} &amp; {COUPLE.groom}
+        <p className="mt-2.5 font-display text-[clamp(1rem,4.2vw,1.2rem)] font-semibold tracking-wide text-[#5a3940] italic">to celebrate the wedding of</p>
+        <p className="mt-1 flex items-center justify-center gap-[clamp(12px,3.6vw,22px)] font-script text-[clamp(2.6rem,11vw,3.7rem)] leading-[1.15] text-[#9c1f45] [text-shadow:0_2px_10px_rgba(255,255,255,0.8)]">
+          <span>{COUPLE.bride}</span>
+          <span className="translate-y-[0.06em] bg-[linear-gradient(160deg,#d9ad55,#9a6c22_55%,#c99a3c)] bg-clip-text font-display text-[0.76em] font-bold text-transparent italic [-webkit-text-stroke:0] [text-shadow:none]">
+            &amp;
+          </span>
+          <span>{COUPLE.groom}</span>
         </p>
         <GoldRule flip />
       </div>
