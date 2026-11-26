@@ -454,7 +454,7 @@ export function DressCode() {
 /* ───────── how to reach: live map, wedding venue or home ───────── */
 const PLACES = [
   { id: 'wedding', tab: 'Wedding', title: VENUE.name, lines: [VENUE.address], embed: VENUE.embedUrl, maps: VENUE.mapsUrl },
-  { id: 'home', tab: 'Haldi & Mehendi', title: HOME_VENUE.name, lines: [HOME_VENUE.label, HOME_VENUE.address, HOME_VENUE.landmark], embed: HOME_VENUE.embedUrl, maps: HOME_VENUE.mapsUrl },
+  { id: 'home', tab: 'Haldi · Samota · Mehendi', title: HOME_VENUE.name, lines: [HOME_VENUE.label, HOME_VENUE.address, HOME_VENUE.landmark], embed: HOME_VENUE.embedUrl, maps: HOME_VENUE.mapsUrl },
 ] as const;
 
 export function Venue() {

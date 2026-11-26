@@ -104,7 +104,7 @@ export const EVENTS: EventItem[] = [
     hindi: 'समोटा',
     day: 'Day Two',
     time: '10:00 am onwards',
-    place: 'On the terrace, Bharat Kunj, Vile Parle (East)',
+    place: 'At our home, Bharat Kunj, Vile Parle (East)',
     mapsUrl: HOME_MAPS,
     line: 'A morning of blessings, rituals & family love.',
     dress: 'Marigold & Rani Pink · traditional festive wear',
@@ -150,15 +150,15 @@ export const VENUE = {
   mapsUrl: WEDDING_MAPS,
 };
 
-/** Haldi & Mehendi are at home, on the terrace. */
+/** Haldi & Mehendi are on the terrace; Samota is inside the home. */
 export const HOME_VENUE = {
   name: 'Bharat Kunj',
-  label: 'Our home · on the terrace',
+  label: 'Our home · Haldi & Mehendi on the terrace, Samota at home',
   address: '14/A, Bharat Kunj, Shraddhanand Road, Vile Parle (East), Mumbai – 400057',
   landmark: 'Opposite Canara Bank',
   mapsUrl: HOME_MAPS,
-  embedUrl:
-    'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d235.6397763540426!2d72.84542646539475!3d19.097281467874627!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c90021d7c757%3A0xdf76ee1b955b0d3!2sBharat%20Kunj!5e0!3m2!1sen!2sin!4v1795715162437!5m2!1sen!2sin',
+  /** Address search at street zoom, so the red Bharat Kunj pin and nearby roads are visible */
+  embedUrl: 'https://maps.google.com/maps?q=Bharat%20Kunj%2C%20Shraddhanand%20Road%2C%20Vile%20Parle%20East%2C%20Mumbai%20400057&z=17&output=embed',
 };
 
 /** Photos for the “Our Moments” gallery (public/photos). ✏️ captions are editable. */
