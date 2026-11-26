@@ -236,6 +236,14 @@ export function WeddingDay() {
         <p className="mt-3 font-script text-[2.2rem] leading-none text-[#9c1f45]">{VENUE.name}</p>
         <p className="mx-auto mt-2 max-w-md font-serif font-medium text-[1.02rem] leading-relaxed text-[#33242a]">{VENUE.address}</p>
         <p className="mt-3 font-serif text-[1.02rem] font-bold text-[#4a2a30]">🚗 {VENUE.note}</p>
+        <a
+          href={VENUE.mapsUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-5 inline-flex items-center gap-2 rounded-full bg-[linear-gradient(110deg,#b8893a,#f3d98e_45%,#c99c45)] px-7 py-3 font-sans text-[0.95rem] font-semibold tracking-wide text-[#4a1a24] shadow-[0_10px_24px_-10px_rgba(140,90,20,0.8)] transition-transform active:scale-95"
+        >
+          <span aria-hidden>📍</span> Open live location
+        </a>
       </PaperCard>
     </section>
   );
