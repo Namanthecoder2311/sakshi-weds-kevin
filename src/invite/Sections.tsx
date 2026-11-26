@@ -152,6 +152,19 @@ export function Families() {
   return (
     <section>
       <PaperCard>
+        {/* Shree Ganesh, from the printed card */}
+        <div className="relative mx-auto mb-4 w-fit">
+          <div className="absolute inset-[-18%] rounded-full bg-[radial-gradient(closest-side,rgba(243,210,130,0.55),rgba(243,210,130,0))]" aria-hidden />
+          <motion.img
+            src={ART.ganesh}
+            alt="Shree Ganesh"
+            className="relative w-[clamp(96px,28vw,128px)] drop-shadow-[0_8px_12px_rgba(120,70,20,0.25)]"
+            initial={{ opacity: 0, scale: 0.85, y: 10 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.2, 0.7, 0.2, 1] }}
+          />
+        </div>
         {/* three invocations */}
         <div className="flex flex-col items-center gap-1 sm:grid sm:grid-cols-3 sm:items-start sm:gap-2">
           {INVOCATIONS.map((t) => (

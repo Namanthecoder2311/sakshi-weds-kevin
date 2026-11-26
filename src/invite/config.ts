@@ -146,6 +146,7 @@ export const ART = {
   haldi: '/art/haldi.webp',
   mehendi: '/art/mehendi.webp',
   wedding: '/art/wedding.webp',
+  ganesh: '/art/ganesh.webp',
 };
 
 export const THANK_YOU = 'Your love, blessings & presence mean the world to us. Thank you for being a part of our forever.';
