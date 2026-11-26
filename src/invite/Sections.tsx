@@ -467,28 +467,32 @@ export function DressCode() {
   );
 }
 
-/* ───────── venue ───────── */
+/* ───────── how to reach: live map ───────── */
 export function Venue() {
-  const maps = VENUE.mapsUrl;
-  const hasArt = useImage(ART.cover);
   return (
     <section>
-      <Heading eyebrow="The venue" title={VENUE.name} sub={VENUE.area} />
-      <Reveal className="mx-auto mt-8 w-[min(86vw,480px)]">
-        <div className="relative overflow-hidden rounded-t-full rounded-b-2xl border-[1.5px] border-[#c9a24a] p-1.5">
-          <div className="aspect-[4/3] overflow-hidden rounded-t-full rounded-b-xl">
-            {hasArt ? <img src={ART.cover} alt="Palace by the lake" className="h-full w-full origin-[90%_27%] scale-[2.5] object-cover object-[50%_30%]" /> : <CoverPainting className="h-full w-full" />}
+      <Heading eyebrow="Find your way" title="How to Reach" sub="Celebration Lawn · below Mandapeshwar Metro Station" />
+      <Reveal className="mx-auto mt-8 w-[min(90vw,560px)]">
+        <div className="rounded-[1.6rem] bg-[linear-gradient(160deg,#f3dfae,#c99c45_50%,#e9c977)] p-[5px] shadow-[0_30px_60px_-30px_rgba(80,40,20,0.7)]">
+          <div className="relative overflow-hidden rounded-[1.3rem] bg-[#efe6d6]">
+            <iframe
+              title="Map to Celebration Lawn, Borivali"
+              src={VENUE.embedUrl}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="block aspect-[4/3.4] w-full border-0"
+            />
           </div>
         </div>
       </Reveal>
       <Reveal className="mt-7 flex justify-center">
         <a
-          href={maps}
+          href={VENUE.mapsUrl}
           target="_blank"
           rel="noreferrer"
-          className="rounded-full bg-[linear-gradient(110deg,#b8893a,#f3d98e_45%,#c99c45)] px-7 py-3 font-sans text-sm font-medium tracking-wide text-[#4a1a24] shadow-[0_10px_24px_-10px_rgba(140,90,20,0.8)]"
+          className="inline-flex items-center gap-2 rounded-full bg-[linear-gradient(110deg,#b8893a,#f3d98e_45%,#c99c45)] px-7 py-3 font-sans text-[0.95rem] font-semibold tracking-wide text-[#4a1a24] shadow-[0_10px_24px_-10px_rgba(140,90,20,0.8)] transition-transform active:scale-95"
         >
-          Open live location
+          <span aria-hidden>🧭</span> Get directions
         </a>
       </Reveal>
     </section>

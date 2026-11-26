@@ -121,6 +121,8 @@ export const VENUE = {
   area: 'Borivali (West), Mumbai',
   address: 'Link Road, below Mandapeshwar Metro Station, Ganpat Patil Nagar, Borivali (West), Mumbai – 400103',
   note: 'Valet parking available',
+  /** Live map shown on the page (Google Maps embed, no key needed) */
+  embedUrl: 'https://maps.google.com/maps?q=Celebration%20Lawn%2C%20Link%20Road%2C%20Borivali%20West%2C%20Mumbai%20400103&z=16&output=embed',
   /** Google Maps link for “Open live location” */
   mapsUrl:
     'https://www.google.com/maps/place/Celebration+Lawn+Borivali/@19.2488106,72.8452875,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7b11f83bb2f2f:0xf5f4c23d49c3397!8m2!3d19.2488106!4d72.8452875!16s%2Fg%2F11lnhmdzvj',
