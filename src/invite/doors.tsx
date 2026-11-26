@@ -3,7 +3,7 @@
 // golden light pours through the gap and gold dust bursts out.
 import { AnimatePresence, motion } from 'framer-motion';
 import { COUPLE } from './config';
-import { GUEST } from './guest';
+import { GuestPlaque } from './GuestPlaque';
 import { Mandala, WaxSeal } from './ornaments';
 
 const EASE = [0.4, 0.05, 0.3, 1] as const;
@@ -172,16 +172,7 @@ export function Doors({ open, onOpen, skip }: { open: boolean; onOpen: () => voi
               <p className="rounded-full border border-[#d6ad5c]/70 bg-[#3c0714]/70 px-5 py-1.5 font-deva text-[clamp(0.95rem,4vw,1.3rem)] text-[#f3d98e] shadow-[0_6px_16px_rgba(0,0,0,0.4)] backdrop-blur-sm">
                 ॥ श्री गणेशाय नमः ॥
               </p>
-              {GUEST && (
-                <motion.p
-                  className="mt-3 font-script text-[clamp(1.5rem,6.4vw,2.1rem)] leading-none text-[#f6dc96] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.9 }}
-                >
-                  For {GUEST}
-                </motion.p>
-              )}
+              <GuestPlaque />
             </div>
             {/* invisible hit area over the seal */}
             <button
