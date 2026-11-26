@@ -90,22 +90,38 @@ export function CoverPainting({ className }: { className?: string }) {
   );
 }
 
-/* ───────── “You are invited” frame ───────── */
+/* ───────── “You are invited” (frameless: a soft ivory glow behind the text, gold ornaments) ───────── */
+function GoldRule({ flip = false }: { flip?: boolean }) {
+  return (
+    <div className={`flex items-center justify-center gap-2.5 ${flip ? 'mt-2' : 'mb-2'}`} aria-hidden>
+      <span className="h-px w-[clamp(44px,14vw,80px)] bg-gradient-to-r from-transparent to-[#b8893a]" />
+      <svg viewBox="0 0 24 12" className="w-6 text-[#b8893a]">
+        <path d="M12 1 L15 6 L12 11 L9 6 Z" fill="currentColor" />
+        <circle cx="3" cy="6" r="1.4" fill="currentColor" />
+        <circle cx="21" cy="6" r="1.4" fill="currentColor" />
+      </svg>
+      <span className="h-px w-[clamp(44px,14vw,80px)] bg-gradient-to-l from-transparent to-[#b8893a]" />
+    </div>
+  );
+}
+
 export function InvitedFrame() {
   return (
-    <div className="relative mx-auto w-[min(76vw,380px)] overflow-hidden rounded-[999px] border-2 border-[#c9a24a] bg-[#fbf7f0]/88 px-6 py-[clamp(14px,2.6svh,26px)] text-center shadow-[0_10px_30px_rgba(90,60,30,0.18)] backdrop-blur-[2px]">
-      <div className="pointer-events-none absolute inset-[5px] rounded-[999px] border border-[#d8bd8c]" />
-      {/* gold foil shimmer sweeping across the frame */}
-      <div className="frame-shimmer pointer-events-none absolute inset-0 overflow-hidden rounded-[999px]" />
-      {GUEST && <p className="mb-1.5 font-display text-[clamp(1.15rem,5vw,1.5rem)] leading-tight font-bold text-[#8e1d3d] italic">Dear {GUEST},</p>}
-      <p className="font-display text-[clamp(1.5rem,6.6vw,2.3rem)] leading-[1.1] font-bold tracking-[0.18em] text-[#7a5a32] uppercase">
-        You are
-        <br />
-        invited
-      </p>
-      <p className="mt-1 font-script text-[clamp(1.4rem,6vw,2rem)] text-[#9c1f45]">
-        {COUPLE.bride} &amp; {COUPLE.groom}
-      </p>
+    <div className="relative mx-auto w-[min(88vw,440px)] text-center">
+      {/* soft ivory haze so the words read over the painted sky — no hard outline */}
+      <div className="pointer-events-none absolute -inset-x-8 -inset-y-7 bg-[radial-gradient(closest-side,rgba(255,251,244,0.93),rgba(255,251,244,0.78)_55%,rgba(255,251,244,0)_100%)]" />
+      <div className="relative">
+        {GUEST && <p className="mb-2 font-display text-[clamp(1.15rem,5vw,1.5rem)] leading-tight font-bold text-[#8e1d3d] italic">Dear {GUEST},</p>}
+        <GoldRule />
+        <p className="bg-[linear-gradient(110deg,#6e4a18,#b8893a_45%,#7a5420)] bg-clip-text font-display text-[clamp(1.35rem,6vw,2.1rem)] leading-none font-bold tracking-[0.14em] text-transparent uppercase">
+          You are invited
+        </p>
+        <p className="mt-2 font-serif text-[clamp(0.85rem,3.6vw,1rem)] font-medium text-[#5a3940] italic">to celebrate the wedding of</p>
+        <p className="mt-1 font-script text-[clamp(2.4rem,10.5vw,3.4rem)] leading-[1.05] text-[#9c1f45] [text-shadow:0_2px_10px_rgba(255,255,255,0.8)]">
+          {COUPLE.bride} &amp; {COUPLE.groom}
+        </p>
+        <GoldRule flip />
+      </div>
     </div>
   );
 }
