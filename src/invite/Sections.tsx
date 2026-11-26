@@ -2,7 +2,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { useEffect, useRef, useState } from 'react';
-import { ART, BIDAAI_QUOTE, COUPLE, EVENTS, GANESH_VERSE, GREETING, INVOCATIONS, THANK_YOU, VENUE, WEDDING_DAY, WELCOME, type EventItem } from './config';
+import { ART, BIDAAI_QUOTE, COUPLE, EVENTS, GANESH_VERSE, GREETING, HOME_VENUE, INVOCATIONS, THANK_YOU, VENUE, WEDDING_DAY, WELCOME, type EventItem } from './config';
 import { EventIcon, Flourish, WaxSeal } from './ornaments';
 import { CoverPainting, useImage } from './opening';
 import { Scratch } from './Scratch';
@@ -382,6 +382,16 @@ function EventCard({ e, i }: { e: EventItem; i: number }) {
           <p>
             <span className="text-[#9a6c22]">⌖</span> {e.place}
           </p>
+          {e.mapsUrl && (
+            <a
+              href={e.mapsUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-[#c9a24a] bg-white/70 px-4 py-1.5 font-sans text-[0.85rem] font-semibold text-[#6b3a1c]"
+            >
+              <span aria-hidden>📍</span> Location
+            </a>
+          )}
         </div>
         <p className="mt-3 font-serif font-medium text-[1.03rem] text-[#5a3940] italic">{e.line}</p>
       </Reveal>
@@ -441,34 +451,56 @@ export function DressCode() {
   );
 }
 
-/* ───────── how to reach: live map ───────── */
+/* ───────── how to reach: live map, wedding venue or home ───────── */
+const PLACES = [
+  { id: 'wedding', tab: 'Wedding', title: VENUE.name, lines: [VENUE.address], embed: VENUE.embedUrl, maps: VENUE.mapsUrl },
+  { id: 'home', tab: 'Haldi & Mehendi', title: HOME_VENUE.name, lines: [HOME_VENUE.label, HOME_VENUE.address, HOME_VENUE.landmark], embed: HOME_VENUE.embedUrl, maps: HOME_VENUE.mapsUrl },
+] as const;
+
 export function Venue() {
+  const [which, setWhich] = useState(0);
+  const p = PLACES[which];
   return (
     <section>
-      <Heading eyebrow="Find your way" title="How to Reach" sub="Celebration Lawn · below Mandapeshwar Metro Station" />
-      <Reveal className="mx-auto mt-8 w-[min(90vw,560px)]">
+      <Heading eyebrow="Find your way" title="How to Reach" sub="Tap a celebration to see its map" />
+      <Reveal className="mt-6 flex justify-center">
+        <div className="flex rounded-full bg-[#f1e0c6] p-1 shadow-inner">
+          {PLACES.map((x, k) => (
+            <button
+              key={x.id}
+              onClick={() => setWhich(k)}
+              className={`rounded-full px-5 py-2 font-sans text-[0.92rem] font-semibold transition-all ${k === which ? 'bg-[#9c1f45] text-white shadow-[0_6px_14px_-6px_rgba(156,31,69,0.9)]' : 'text-[#6b3a1c]'}`}
+            >
+              {x.tab}
+            </button>
+          ))}
+        </div>
+      </Reveal>
+      <Reveal className="mx-auto mt-6 w-[min(90vw,560px)]">
         <div className="rounded-[1.6rem] bg-[linear-gradient(160deg,#f3dfae,#c99c45_50%,#e9c977)] p-[5px] shadow-[0_30px_60px_-30px_rgba(80,40,20,0.7)]">
           <div className="relative overflow-hidden rounded-[1.3rem] bg-[#efe6d6]">
-            <iframe
-              title="Map to Celebration Lawn, Borivali"
-              src={VENUE.embedUrl}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="block aspect-[4/3.4] w-full border-0"
-            />
+            <iframe key={p.id} title={`Map to ${p.title}`} src={p.embed} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="block aspect-[4/3.4] w-full border-0" />
           </div>
         </div>
       </Reveal>
-      <Reveal className="mt-7 flex justify-center">
+      <div className="mx-auto mt-5 max-w-md px-6 text-center">
+        <p className="font-script text-[2.2rem] leading-none text-[#9c1f45]">{p.title}</p>
+        {p.lines.map((l, k) => (
+          <p key={l} className={`mt-1.5 font-serif text-[1rem] leading-relaxed text-[#33242a] ${k === p.lines.length - 1 && p.id === 'home' ? 'font-bold' : 'font-medium'}`}>
+            {l}
+          </p>
+        ))}
+      </div>
+      <div className="mt-6 flex justify-center">
         <a
-          href={VENUE.mapsUrl}
+          href={p.maps}
           target="_blank"
           rel="noreferrer"
           className="inline-flex items-center gap-2 rounded-full bg-[linear-gradient(110deg,#b8893a,#f3d98e_45%,#c99c45)] px-7 py-3 font-sans text-[0.95rem] font-semibold tracking-wide text-[#4a1a24] shadow-[0_10px_24px_-10px_rgba(140,90,20,0.8)] transition-transform active:scale-95"
         >
           <span aria-hidden>🧭</span> Get directions
         </a>
-      </Reveal>
+      </div>
     </section>
   );
 }

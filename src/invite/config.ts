@@ -70,11 +70,18 @@ export type EventItem = {
   day: string; // shown instead of a date
   time: string;
   place: string;
+  mapsUrl?: string;
   line: string;
   dress: string;
   swatches: string[];
   accent: string;
 };
+
+// Map links (full Google Maps place links — the short goo.gl ones don't open reliably)
+const WEDDING_MAPS =
+  'https://www.google.com/maps/place/Celebration+Lawn+Borivali/@19.2488106,72.8452875,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7b11f83bb2f2f:0xf5f4c23d49c3397!8m2!3d19.2488106!4d72.8452875!16s%2Fg%2F11lnhmdzvj';
+const HOME_MAPS =
+  'https://www.google.com/maps/place/Bharat+Kunj/@19.0972815,72.8454265,21z/data=!4m15!1m8!4m7!1m4!2m2!1d72.8454368!2d19.0972727!4e1!1m0!3e0!3m5!1s0x3be7c90021d7c757:0xdf76ee1b955b0d3!8m2!3d19.0974288!4d72.845661!16s%2Fg%2F11zzp3zpgy';
 
 // ✏️ times & places
 export const EVENTS: EventItem[] = [
@@ -84,7 +91,8 @@ export const EVENTS: EventItem[] = [
     hindi: 'हल्दी',
     day: 'Day One',
     time: '10:00 am onwards',
-    place: 'Venue to be announced',
+    place: 'On the terrace, Bharat Kunj, Vile Parle (East)',
+    mapsUrl: HOME_MAPS,
     line: 'A morning bathed in turmeric, laughter & sunlight.',
     dress: 'Sunshine Yellow · florals & soft pastels',
     swatches: ['#F2C230', '#F7DA6A', '#FBF3D9'],
@@ -96,7 +104,8 @@ export const EVENTS: EventItem[] = [
     hindi: 'मेहंदी',
     day: 'Day One',
     time: '4:00 pm onwards',
-    place: 'Venue to be announced',
+    place: 'On the terrace, Bharat Kunj, Vile Parle (East)',
+    mapsUrl: HOME_MAPS,
     line: 'Henna, music and a thousand quiet wishes.',
     dress: 'Olive & Blush · pastel hues, light embroidery',
     swatches: ['#7D8B45', '#E8A8A0', '#F3E6D6'],
@@ -109,6 +118,7 @@ export const EVENTS: EventItem[] = [
     day: 'Day Two',
     time: '3:45 pm onwards',
     place: 'Celebration Lawn, Borivali (West)',
+    mapsUrl: WEDDING_MAPS,
     line: 'The vow that begins our forever.',
     dress: 'Ivory, Red & Emerald · royal silks, heavy gold',
     swatches: ['#9E2B3A', '#F3E6CC', '#3E7B5B'],
@@ -124,8 +134,18 @@ export const VENUE = {
   /** Live map shown on the page (Google Maps embed, no key needed) */
   embedUrl: 'https://maps.google.com/maps?q=Celebration%20Lawn%2C%20Link%20Road%2C%20Borivali%20West%2C%20Mumbai%20400103&z=16&output=embed',
   /** Google Maps link for “Open live location” */
-  mapsUrl:
-    'https://www.google.com/maps/place/Celebration+Lawn+Borivali/@19.2488106,72.8452875,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7b11f83bb2f2f:0xf5f4c23d49c3397!8m2!3d19.2488106!4d72.8452875!16s%2Fg%2F11lnhmdzvj',
+  mapsUrl: WEDDING_MAPS,
+};
+
+/** Haldi & Mehendi are at home, on the terrace. */
+export const HOME_VENUE = {
+  name: 'Bharat Kunj',
+  label: 'Our home · on the terrace',
+  address: '14/A, Bharat Kunj, Shraddhanand Road, Vile Parle (East), Mumbai – 400057',
+  landmark: 'Opposite Canara Bank',
+  mapsUrl: HOME_MAPS,
+  embedUrl:
+    'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d235.6397763540426!2d72.84542646539475!3d19.097281467874627!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c90021d7c757%3A0xdf76ee1b955b0d3!2sBharat%20Kunj!5e0!3m2!1sen!2sin!4v1795715162437!5m2!1sen!2sin',
 };
 
 /** Photos for the “Our Moments” gallery (public/photos). ✏️ captions are editable. */
