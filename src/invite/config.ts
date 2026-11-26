@@ -64,10 +64,10 @@ export const WELCOME = {
 };
 
 export type EventItem = {
-  id: 'haldi' | 'mehendi' | 'wedding';
+  id: 'haldi' | 'samota' | 'mehendi' | 'wedding';
   name: string;
   hindi: string;
-  day: string; // shown instead of a date
+  day: string; // shown instead of a date (the dates stay secret)
   time: string;
   place: string;
   mapsUrl?: string;
@@ -90,20 +90,33 @@ export const EVENTS: EventItem[] = [
     name: 'Haldi',
     hindi: 'हल्दी',
     day: 'Day One',
-    time: '10:00 am onwards',
+    time: 'Evening',
     place: 'On the terrace, Bharat Kunj, Vile Parle (East)',
     mapsUrl: HOME_MAPS,
-    line: 'A morning bathed in turmeric, laughter & sunlight.',
+    line: 'An evening bathed in turmeric, laughter & golden light.',
     dress: 'Sunshine Yellow · florals & soft pastels',
     swatches: ['#F2C230', '#F7DA6A', '#FBF3D9'],
     accent: '#D9A11A',
   },
   {
+    id: 'samota',
+    name: 'Samota',
+    hindi: 'समोटा',
+    day: 'Day Two',
+    time: '10:00 am onwards',
+    place: 'On the terrace, Bharat Kunj, Vile Parle (East)',
+    mapsUrl: HOME_MAPS,
+    line: 'A morning of blessings, rituals & family love.',
+    dress: 'Marigold & Rani Pink · traditional festive wear',
+    swatches: ['#E8822A', '#D6336C', '#FBE3C8'],
+    accent: '#D9622B',
+  },
+  {
     id: 'mehendi',
     name: 'Mehendi',
     hindi: 'मेहंदी',
-    day: 'Day One',
-    time: '4:00 pm onwards',
+    day: 'Day Two',
+    time: '3:00 pm onwards',
     place: 'On the terrace, Bharat Kunj, Vile Parle (East)',
     mapsUrl: HOME_MAPS,
     line: 'Henna, music and a thousand quiet wishes.',
@@ -115,7 +128,7 @@ export const EVENTS: EventItem[] = [
     id: 'wedding',
     name: 'Wedding',
     hindi: 'विवाह',
-    day: 'Day Two',
+    day: 'The Big Day',
     time: '3:45 pm onwards',
     place: 'Celebration Lawn, Borivali (West)',
     mapsUrl: WEDDING_MAPS,
@@ -164,6 +177,7 @@ export const MUSIC = '/music.mp3';
 export const ART = {
   cover: '/art/cover.webp',
   haldi: '/art/haldi.webp',
+  samota: '/art/samota.webp',
   mehendi: '/art/mehendi.webp',
   wedding: '/art/wedding.webp',
   ganesh: '/art/ganesh.webp',

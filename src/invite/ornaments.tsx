@@ -132,6 +132,24 @@ export function EventIcon({ id, className }: { id: string; className?: string })
             <circle cx="50" cy="50" r="5" fill={s} />
           </>
         )}
+        {id === 'samota' && (
+          <>
+            {/* diya with flame and soft rays */}
+            <path d="M50 22 C56 31 57 38 50 44 C43 38 44 31 50 22Z" fill={s} fillOpacity="0.45" />
+            <path d="M50 30 C53 35 53 38 50 41 C47 38 47 35 50 30Z" fill={s} />
+            {[-60, -35, 35, 60].map((a) => (
+              <path key={a} d="M50 16 V9" transform={`rotate(${a} 50 40)`} strokeWidth="1.2" />
+            ))}
+            <path d="M24 52 H76 C74 64 64 72 50 72 C36 72 26 64 24 52Z" />
+            <path d="M50 46 V52" strokeWidth="2" />
+            <path d="M30 58 Q50 64 70 58" strokeWidth="1" />
+            {[36, 44, 50, 56, 64].map((x) => (
+              <circle key={x} cx={x} cy={x === 50 ? 62 : x === 44 || x === 56 ? 61.4 : 60} r="1.1" fill={s} />
+            ))}
+            <path d="M40 72 Q50 80 60 72" />
+            <path d="M34 82 H66" strokeWidth="1" />
+          </>
+        )}
         {id === 'mehendi' && (
           <>
             <path d="M34 88 V60 C30 54 24 46 22 40 C20 34 26 32 29 37 L36 48 V20 C36 15 43 15 43 20 V44 V14 C43 9 50 9 50 14 V44 V17 C50 12 57 12 57 17 V45 V24 C57 19 64 19 64 24 V62 C64 74 60 80 60 88" />
