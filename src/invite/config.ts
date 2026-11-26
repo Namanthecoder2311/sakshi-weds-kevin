@@ -34,10 +34,10 @@ export const BIDAAI_QUOTE =
 
 /** Wedding-day programme (times only — the date stays hidden). */
 export const WEDDING_DAY = [
-  { name: 'Jaan nu Swagat', meaning: 'Welcoming the groom’s procession', time: '3:45 pm' },
-  { name: 'Hastmelap', meaning: 'The sacred joining of hands', time: '4:30 pm' },
-  { name: 'Preeti Bhojan', meaning: 'Dinner with love', time: '5:30 pm' },
-  { name: 'Aashish Sandhya', meaning: 'An evening of blessings', time: '7:00 pm – 10:00 pm' },
+  { icon: '🎺', name: 'Jaan nu Swagat', meaning: 'Welcoming the groom’s procession', time: '3:45 pm' },
+  { icon: '💞', name: 'Hastmelap', meaning: 'The sacred joining of hands', time: '4:30 pm' },
+  { icon: '🍽️', name: 'Preeti Bhojan', meaning: 'Dinner with love', time: '5:30 pm' },
+  { icon: '✨', name: 'Aashish Sandhya', meaning: 'An evening of blessings', time: '7 – 10 pm' },
 ];
 
 /** Hosts & family who welcome the guests. */

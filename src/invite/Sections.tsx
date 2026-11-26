@@ -28,7 +28,7 @@ function Heading({ eyebrow, title, sub, rose = false }: { eyebrow: string; title
     <Reveal className="px-6 text-center">
       <p className="caps-label text-[#8c6a3a]">{eyebrow}</p>
       <h2 className={`mt-1 font-script text-[clamp(2.5rem,10.5vw,3.8rem)] leading-[1.12] ${rose ? 'title-rose text-[#9c1f45]' : 'text-[#4a2230]'}`}>{title}</h2>
-      {sub && <p className="mt-1 font-serif text-[0.92rem] text-[#8a7470] italic">{sub}</p>}
+      {sub && <p className="mt-1 font-serif font-medium text-[1.02rem] text-[#5f4045] italic">{sub}</p>}
     </Reveal>
   );
 }
@@ -130,7 +130,7 @@ function FamilyLines({ lines }: { lines: string[] }) {
   return (
     <div className="space-y-0.5">
       {lines.map((l) => (
-        <p key={l} className="font-serif text-[0.86rem] font-semibold text-[#4a2a30] sm:text-[0.95rem]">
+        <p key={l} className="font-serif text-[0.97rem] font-semibold text-[#4a2a30] sm:text-[1.03rem]">
           {l}
         </p>
       ))}
@@ -141,7 +141,7 @@ function FamilyLines({ lines }: { lines: string[] }) {
 function ChiName({ name }: { name: string }) {
   return (
     <div className="flex flex-col items-center sm:flex-row sm:items-baseline sm:justify-center sm:gap-1.5">
-      <span className="font-display text-base font-bold text-[#b8893a] sm:text-lg">Chi.</span>
+      <span className="font-display text-base font-bold text-[#9a6c22] sm:text-lg">Chi.</span>
       <span className="font-script text-[2.5rem] leading-none text-[#9c1f45] sm:text-[3.2rem]">{name}</span>
     </div>
   );
@@ -153,16 +153,16 @@ export function Families() {
     <section>
       <PaperCard>
         {/* three invocations */}
-        <div className="grid grid-cols-3 items-start gap-2">
+        <div className="flex flex-col items-center gap-1 sm:grid sm:grid-cols-3 sm:items-start sm:gap-2">
           {INVOCATIONS.map((t) => (
-            <p key={t} className="font-display text-[0.8rem] leading-tight font-bold text-[#8e2440] sm:text-[1.02rem]">
+            <p key={t} className="font-display text-[0.92rem] leading-tight font-bold text-[#8e2440] sm:text-[1.1rem]">
               ॥ {t} ॥
             </p>
           ))}
         </div>
 
         {/* verse on both sides of the kalash */}
-        <div className="mt-6 grid grid-cols-2 items-center gap-x-3 gap-y-4 font-display text-[0.9rem] leading-snug text-[#5a3b30] italic sm:grid-cols-[1fr_auto_1fr] sm:gap-x-5 sm:text-[1rem]">
+        <div className="mt-6 grid grid-cols-2 items-center gap-x-3 gap-y-4 font-display text-[1.08rem] leading-snug font-semibold text-[#4e2b24] italic sm:grid-cols-[1fr_auto_1fr] sm:gap-x-5 sm:text-[1.12rem]">
           <Kalash className="order-0 col-span-2 mx-auto w-20 sm:order-2 sm:col-span-1 sm:w-24" />
           <div className="order-1 sm:order-3 sm:text-left">
             {gauri.map((l) => (
@@ -176,22 +176,22 @@ export function Families() {
           </div>
         </div>
 
-        <p className="mx-auto mt-7 max-w-md font-script text-[1.55rem] leading-snug text-[#9c1f45] sm:text-[1.85rem]">
+        <p className="mx-auto mt-7 max-w-md font-display text-[1.35rem] leading-snug font-semibold text-[#9c1f45] italic sm:text-[1.6rem]">
           “Two hearts found their way to each other, and now begins a journey of …… Forever”
         </p>
 
         <SmallFlourish />
 
         {/* “Snehi Swajan Shree ……” */}
-        <p className="font-display text-[1.1rem] text-[#4a2a30] sm:text-[1.25rem]">
+        <p className="font-display text-[1.25rem] font-semibold text-[#4a2a30] sm:text-[1.4rem]">
           Dear{' '}
           <span className="border-b border-dotted border-[#b8893a] px-2 font-script text-[1.9rem] leading-none text-[#9c1f45] sm:text-[2.2rem]">
             {GUEST || 'beloved family & friends'}
           </span>
           ,
         </p>
-        <p className="mt-4 font-serif text-[0.95rem] text-[#5a4044] sm:text-[1.02rem]">{GREETING}</p>
-        <p className="mx-auto mt-3 max-w-lg font-serif text-[0.9rem] leading-relaxed text-[#7a5a5c] italic sm:text-[0.98rem]">“{BIDAAI_QUOTE}”</p>
+        <p className="mt-4 font-serif font-medium text-[1.03rem] text-[#3f2a2e] sm:text-[1.08rem]">{GREETING}</p>
+        <p className="mx-auto mt-3 max-w-lg font-serif font-medium text-[1rem] leading-relaxed text-[#5a3940] italic sm:text-[1.05rem]">“{BIDAAI_QUOTE}”</p>
 
         <SmallFlourish />
 
@@ -199,7 +199,7 @@ export function Families() {
         <FamilyLines lines={COUPLE.brideFamily} />
         <div className="my-5 grid grid-cols-[1fr_auto_1fr] items-center gap-2">
           <ChiName name={COUPLE.bride} />
-          <p className="font-script text-[1.35rem] text-[#b8893a] sm:text-[1.7rem]">“Shubh Lagna”</p>
+          <p className="font-display text-[1.05rem] leading-tight font-bold tracking-wide text-[#a0701f] uppercase sm:text-[1.25rem]">Shubh<br />Lagna</p>
           <ChiName name={COUPLE.groom} />
         </div>
         <FamilyLines lines={COUPLE.groomFamily} />
@@ -224,17 +224,18 @@ export function WeddingDay() {
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.6, delay: 0.1 + i * 0.12 }}
             >
-              <p className="font-script text-[1.55rem] leading-[1.05] text-[#4a2230]">{e.name}</p>
-              <p className="mt-1 font-serif text-[0.72rem] leading-snug text-[#8a7470] italic">{e.meaning}</p>
-              <p className="mt-2 font-sans text-[0.8rem] font-semibold text-[#9c1f45]">{e.time}</p>
+              <span className="text-2xl" aria-hidden>{e.icon}</span>
+              <p className="mt-1 font-script text-[1.8rem] leading-[1.05] text-[#4a2230]">{e.name}</p>
+              <p className="mt-1 font-serif font-medium text-[0.84rem] leading-snug text-[#5f4045] italic">{e.meaning}</p>
+              <p className="mt-2.5 rounded-full bg-[#9c1f45] px-3 py-1 font-sans text-[0.85rem] font-semibold text-white shadow-[0_6px_14px_-8px_rgba(156,31,69,0.9)]">{e.time}</p>
             </motion.div>
           ))}
         </div>
 
         <TitleBar className="mt-8">Shubh Lagna Sthal · Wedding Venue</TitleBar>
         <p className="mt-3 font-script text-[2.2rem] leading-none text-[#9c1f45]">{VENUE.name}</p>
-        <p className="mx-auto mt-2 max-w-md font-serif text-[0.92rem] leading-relaxed text-[#4a3a3e]">{VENUE.address}</p>
-        <p className="mt-3 font-serif text-[0.92rem] font-bold text-[#4a2a30]">🚗 {VENUE.note}</p>
+        <p className="mx-auto mt-2 max-w-md font-serif font-medium text-[1.02rem] leading-relaxed text-[#33242a]">{VENUE.address}</p>
+        <p className="mt-3 font-serif text-[1.02rem] font-bold text-[#4a2a30]">🚗 {VENUE.note}</p>
       </PaperCard>
     </section>
   );
@@ -247,15 +248,15 @@ export function Welcome() {
       <Heading eyebrow="With love & respect" title="Aavkaar" sub="The families who await you" />
       <PaperCard className="mt-8">
         <TitleBar>{WELCOME.hostsTitle}</TitleBar>
-        <div className="mt-4 space-y-1 font-serif text-[0.92rem] text-[#4a3a3e] sm:text-[1rem]">
+        <div className="mt-4 space-y-1 font-serif font-medium text-[1.02rem] text-[#33242a] sm:text-[1.06rem]">
           {WELCOME.hosts.map((n) => (
             <p key={n}>{n}</p>
           ))}
         </div>
-        <p className="mt-3 font-serif text-[0.92rem] font-bold text-[#4a2a30] sm:text-[1rem]">{WELCOME.hostsClosing}</p>
+        <p className="mt-3 font-serif text-[1.02rem] font-bold text-[#4a2a30] sm:text-[1.06rem]">{WELCOME.hostsClosing}</p>
 
         <TitleBar className="mt-9">{WELCOME.eagerTitle}</TitleBar>
-        <div className="mt-4 grid gap-x-8 gap-y-1 font-serif text-[0.9rem] text-[#4a3a3e] sm:grid-cols-2 sm:text-left sm:text-[0.95rem]">
+        <div className="mt-4 grid gap-x-8 gap-y-1 font-serif font-medium text-[1rem] text-[#33242a] sm:grid-cols-2 sm:text-left sm:text-[1.03rem]">
           {WELCOME.eager.map((n) => (
             <p key={n}>{n}</p>
           ))}
@@ -263,13 +264,13 @@ export function Welcome() {
 
         <SmallFlourish />
 
-        <p className="caps-label text-[0.62rem]! text-[#b8893a]">A little request from the bride’s siblings</p>
-        <p className="mt-2 font-script text-[1.8rem] leading-snug text-[#9c1f45] sm:text-[2.1rem]">“{WELCOME.kidsLine}”</p>
+        <p className="caps-label text-[0.72rem]! text-[#9a6c22]">A little request from the bride’s siblings</p>
+        <p className="mt-2 font-display text-[1.4rem] leading-snug font-bold text-[#9c1f45] italic sm:text-[1.65rem]">“{WELCOME.kidsLine}” 😄</p>
         <div className="mt-4 flex flex-wrap justify-center gap-2">
           {WELCOME.kids.map((k, i) => (
             <motion.span
               key={`${k}-${i}`}
-              className="rounded-full border border-[#ecc9d3] bg-[#fdf1f4] px-3 py-1 font-sans text-[0.8rem] text-[#7c2a40]"
+              className="rounded-full border border-[#ecc9d3] bg-[#fdf1f4] px-3 py-1 font-sans text-[0.9rem] text-[#7c2a40]"
               initial={{ opacity: 0, scale: 0.6, y: 10 }}
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
               viewport={{ once: true }}
@@ -282,7 +283,7 @@ export function Welcome() {
 
         <SmallFlourish />
 
-        <p className="title-rose font-script text-[clamp(2rem,8.5vw,2.9rem)] leading-tight text-[#9c1f45]">“{WELCOME.presence}”</p>
+        <p className="title-rose font-script text-[clamp(2.4rem,10vw,3.2rem)] leading-tight text-[#9c1f45]">“{WELCOME.presence}”</p>
       </PaperCard>
     </section>
   );
@@ -334,7 +335,7 @@ export function Match() {
       <motion.p className="mt-5 h-12 text-center font-script text-4xl text-[#9c1f45]" animate={{ opacity: won ? 1 : 0, scale: won ? 1 : 0.8 }}>
         It’s a match!
       </motion.p>
-      <Reveal className="mx-auto max-w-xs px-6 text-center font-script text-2xl leading-snug text-[#5a4044]">
+      <Reveal className="mx-auto max-w-xs px-6 text-center font-display text-[1.3rem] leading-snug font-semibold text-[#3f2a2e] italic">
         “Two souls, one heart, scratched in fate, sealed with love.”
       </Reveal>
     </section>
@@ -392,15 +393,15 @@ function EventCard({ e, i }: { e: EventItem; i: number }) {
           {e.hindi}
         </p>
         <h3 className="font-script text-[3.4rem] leading-none text-[#4a2230]">{e.name}</h3>
-        <div className="mt-3 space-y-1 font-sans text-[0.85rem] text-[#4a3a3e]">
+        <div className="mt-3 space-y-1 font-sans text-[0.97rem] text-[#33242a]">
           <p>
-            <span className="text-[#b8893a]">✦</span> {e.day} &nbsp;·&nbsp; {e.time}
+            <span className="text-[#9a6c22]">✦</span> {e.day} &nbsp;·&nbsp; {e.time}
           </p>
           <p>
-            <span className="text-[#b8893a]">⌖</span> {e.place}
+            <span className="text-[#9a6c22]">⌖</span> {e.place}
           </p>
         </div>
-        <p className="mt-3 font-serif text-[0.95rem] text-[#7a6266] italic">{e.line}</p>
+        <p className="mt-3 font-serif font-medium text-[1.03rem] text-[#5a3940] italic">{e.line}</p>
       </Reveal>
     </div>
   );
@@ -446,8 +447,8 @@ export function DressCode() {
                 </div>
                 <div className="text-left">
                   <p className="font-script text-3xl leading-none text-[#9c1f45]">{e.name}</p>
-                  <p className="caps-label mt-1 text-[0.6rem]! text-[#b8893a]">{palette}</p>
-                  <p className="font-serif text-xs text-[#7a6266] italic">{note}</p>
+                  <p className="caps-label mt-1 text-[0.7rem]! text-[#9a6c22]">{palette}</p>
+                  <p className="font-serif font-medium text-sm text-[#5a3940] italic">{note}</p>
                 </div>
               </div>
             </Reveal>
@@ -500,8 +501,8 @@ export function ThankYou() {
       <div className="relative flex min-h-[100svh] flex-col items-center px-6 pt-[4svh] text-center">
         <Reveal className="w-full max-w-[300px] rounded-[1.6rem] bg-[#fffaf4]/88 px-6 py-5 shadow-[0_20px_50px_-25px_rgba(90,40,30,0.6)] ring-1 ring-[#e6d3b4] backdrop-blur-sm">
           <h2 className="font-script text-5xl text-[#9c1f45]">Thank You</h2>
-          {GUEST && <p className="mt-1 font-serif text-[0.95rem] text-[#7a6266] italic">Dear {GUEST},</p>}
-          <p className="mt-2 font-serif text-[0.88rem] leading-relaxed text-[#4a3a3e]">{THANK_YOU}</p>
+          {GUEST && <p className="mt-1 font-serif font-medium text-[1.03rem] text-[#5a3940] italic">Dear {GUEST},</p>}
+          <p className="mt-2 font-serif font-medium text-[0.98rem] leading-relaxed text-[#33242a]">{THANK_YOU}</p>
           <div className="mt-3 flex items-center justify-center gap-3">
             <p className="font-script text-2xl text-[#9c1f45]">
               {COUPLE.bride} &amp; {COUPLE.groom}

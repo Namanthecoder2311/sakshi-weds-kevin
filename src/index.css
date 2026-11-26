@@ -21,6 +21,11 @@
   }
 }
 
+/* Great Vibes has hairline strokes; a hint of outline makes it read clearly on phones. */
+.font-script {
+  -webkit-text-stroke: 0.45px currentColor;
+}
+
 /* ── candle-lit table ───────────────────────── */
 .table-bg {
   background:

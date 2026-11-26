@@ -45,7 +45,7 @@ export function Gallery() {
       >
         <p className="caps-label text-[#8c6a3a]">Captured moments</p>
         <h2 className="mt-1 font-script text-[clamp(2.5rem,10.5vw,3.8rem)] leading-[1.12] text-[#4a2230]">Our Moments</h2>
-        <p className="mt-1 font-serif text-[0.92rem] text-[#8a7470] italic">Swipe through our story · tap a photo to see it bigger</p>
+        <p className="mt-1 font-serif font-medium text-[1.02rem] text-[#5f4045] italic">Swipe through our story · tap a photo to see it bigger</p>
       </motion.div>
 
       {/* 3D stage */}
