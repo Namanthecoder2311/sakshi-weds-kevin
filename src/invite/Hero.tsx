@@ -144,13 +144,18 @@ export function Hero({ skip, onOpen }: { skip: boolean; onOpen: () => void }) {
 
         {/* names appear beneath the arch */}
         <div className="absolute inset-x-0 px-6 text-center" style={{ top: archTop + archH + h * 0.025 }}>
-          <motion.p className="caps-label text-[#8c6a3a]" {...line(0)}>
+          <motion.p className="caps-label text-[0.82rem]! text-[#7a5a32]" {...line(0)}>
             The wedding of
           </motion.p>
-          <motion.h1 className="mt-1 font-script text-[clamp(3.2rem,13vw,4.6rem)] leading-[1] text-[#9c1f45]" {...line(0.1)}>
-            {COUPLE.bride}
-            <span className="mx-3 align-middle font-script text-[0.42em] text-[#b8893a]">with</span>
-            {COUPLE.groom}
+          <motion.h1
+            className="mt-1 flex items-center justify-center gap-[clamp(12px,3.6vw,22px)] font-script text-[clamp(2.8rem,11.5vw,4.3rem)] leading-[1.15] text-[#9c1f45]"
+            {...line(0.1)}
+          >
+            <span>{COUPLE.bride}</span>
+            <span className="translate-y-[0.05em] bg-[linear-gradient(160deg,#d9ad55,#9a6c22_55%,#c99a3c)] bg-clip-text font-display text-[0.5em] font-bold text-transparent italic [-webkit-text-stroke:0]">
+              with
+            </span>
+            <span>{COUPLE.groom}</span>
           </motion.h1>
           <motion.div style={{ opacity: textIn }}>
             <Flourish className="mx-auto mt-2 w-40" />
