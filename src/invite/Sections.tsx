@@ -7,6 +7,7 @@ import { EventIcon, Flourish, WaxSeal } from './ornaments';
 import { CoverPainting, useImage } from './opening';
 import { Scratch } from './Scratch';
 import { GUEST } from './guest';
+import { LanternButton, WishLanterns, useLanterns } from './Lanterns';
 
 /* ───────── shared bits ───────── */
 export function Reveal({ children, className, delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
@@ -510,12 +511,14 @@ export function ThankYou() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end end'] });
   const zoom = useTransform(scrollYProgress, [0, 1], [1.2, 1]);
+  const { launches, launch, launched } = useLanterns();
   return (
     <section ref={ref} className="relative mt-24 min-h-[100svh] overflow-hidden">
       <motion.div className="absolute inset-0" style={{ scale: zoom }}>
         <CoverPainting className="h-full w-full" />
       </motion.div>
       <div className="absolute inset-x-0 top-0 h-[45%] bg-gradient-to-b from-[#fbf7f1] via-[#fbf7f1]/70 to-transparent" />
+      <WishLanterns launches={launches} />
       <div className="relative flex min-h-[100svh] flex-col items-center px-6 pt-[4svh] text-center">
         <Reveal className="w-full max-w-[300px] rounded-[1.6rem] bg-[#fffaf4]/88 px-6 py-5 shadow-[0_20px_50px_-25px_rgba(90,40,30,0.6)] ring-1 ring-[#e6d3b4] backdrop-blur-sm">
           <h2 className="font-script text-5xl text-[#9c1f45]">Thank You</h2>
@@ -528,6 +531,7 @@ export function ThankYou() {
             <WaxSeal className="w-10" />
           </div>
         </Reveal>
+        <LanternButton onLaunch={launch} launched={launched} />
       </div>
     </section>
   );
