@@ -2,7 +2,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { useEffect, useRef, useState } from 'react';
-import { ART, COUPLE, EVENTS, THANK_YOU, VENUE, type EventItem } from './config';
+import { ART, BIDAAI_QUOTE, COUPLE, EVENTS, GANESH_VERSE, GREETING, INVOCATIONS, THANK_YOU, VENUE, WEDDING_DAY, WELCOME, type EventItem } from './config';
 import { EventIcon, Flourish, WaxSeal } from './ornaments';
 import { CoverPainting, useImage } from './opening';
 import { Scratch } from './Scratch';
@@ -41,33 +41,158 @@ function Divider() {
   );
 }
 
-/* ───────── Shree Ganeshay Namah + families ───────── */
+/* ───────── the family card (English version of the printed Gujarati card) ───────── */
+function FamilyLines({ lines }: { lines: string[] }) {
+  return (
+    <>
+      {lines.map((l) => (
+        <p key={l} className="mt-1 font-serif text-[0.85rem] text-[#7a6266] italic">
+          {l}
+        </p>
+      ))}
+    </>
+  );
+}
+
+function ChiName({ name }: { name: string }) {
+  return (
+    <p className="font-script text-[2.6rem] leading-none text-[#9c1f45]">
+      <span className="mr-1.5 align-middle font-display text-lg font-semibold text-[#b8893a]">Chi.</span>
+      {name}
+    </p>
+  );
+}
+
 export function Families() {
   return (
     <section className="px-6 text-center">
       <Reveal>
-        <p className="font-deva text-lg text-[#9c2b45]">॥ श्री गणेशाय नमः ॥</p>
-        <p className="caps-label mt-1 text-[0.62rem]! text-[#b8893a]">Shree Ganeshay Namah</p>
-        <p className="mx-auto mt-6 max-w-xs font-script text-[1.6rem] leading-snug text-[#9c1f45]">
-          “Two hearts found their way to each other, and now begins a journey of …… Forever”
-        </p>
-        <div className="mx-auto mt-8 max-w-md text-[#5a4044]">
-          {/* bride: family lines above her name; groom: name first, then family lines */}
-          {COUPLE.brideFamily.map((l) => (
-            <p key={l} className="mt-1 font-serif text-[0.85rem] text-[#7a6266] italic">
-              {l}
-            </p>
-          ))}
-          <p className="mt-3 font-script text-[2.6rem] leading-none text-[#9c1f45]">{COUPLE.bride}</p>
-          <p className="my-4 font-script text-2xl text-[#b8893a]">with</p>
-          <p className="font-script text-[2.6rem] leading-none text-[#9c1f45]">{COUPLE.groom}</p>
-          {COUPLE.groomFamily.map((l) => (
-            <p key={l} className="mt-1 font-serif text-[0.85rem] text-[#7a6266] italic">
-              {l}
+        <div className="mx-auto grid max-w-md grid-cols-3 items-center gap-2 text-[#9c2b45]">
+          {INVOCATIONS.map((t, i) => (
+            <p key={t} className={`font-display leading-tight font-semibold ${i === 1 ? 'text-[0.98rem]' : 'text-[0.86rem] text-[#a8566a]'}`}>
+              ॥ {t} ॥
             </p>
           ))}
         </div>
+        <div className="mx-auto mt-5 max-w-sm space-y-3 font-display text-[1.02rem] leading-snug text-[#6b4a3a] italic">
+          {GANESH_VERSE.map((pair) => (
+            <div key={pair[0]}>
+              {pair.map((l) => (
+                <p key={l}>{l}</p>
+              ))}
+            </div>
+          ))}
+        </div>
+        <p className="mx-auto mt-7 max-w-xs font-script text-[1.6rem] leading-snug text-[#9c1f45]">
+          “Two hearts found their way to each other, and now begins a journey of …… Forever”
+        </p>
       </Reveal>
+
+      <Reveal className="mx-auto mt-8 max-w-md">
+        <p className="font-script text-[1.9rem] leading-tight text-[#4a2230]">Dear {GUEST || 'beloved family & friends'},</p>
+        <p className="mt-2 font-serif text-[0.95rem] text-[#5a4044]">{GREETING}</p>
+        <p className="mx-auto mt-4 max-w-sm font-serif text-[0.9rem] leading-relaxed text-[#7a6266] italic">“{BIDAAI_QUOTE}”</p>
+      </Reveal>
+
+      <Reveal className="mx-auto mt-8 max-w-md text-[#5a4044]">
+        {/* bride: family lines above her name; groom: name first, then family lines */}
+        <FamilyLines lines={COUPLE.brideFamily} />
+        <div className="mt-3">
+          <ChiName name={COUPLE.bride} />
+        </div>
+        <p className="my-4 font-script text-[1.7rem] text-[#b8893a]">✦ Shubh Lagna ✦</p>
+        <ChiName name={COUPLE.groom} />
+        <FamilyLines lines={COUPLE.groomFamily} />
+      </Reveal>
+    </section>
+  );
+}
+
+/* ───────── wedding-day programme ───────── */
+export function WeddingDay() {
+  return (
+    <section>
+      <Heading eyebrow="Shubh Lagna" title="The Wedding Day" sub={`${VENUE.name}, ${VENUE.area}`} rose />
+      <div className="relative mx-auto mt-10 w-[min(88vw,460px)]">
+        <motion.span
+          className="absolute top-5 bottom-5 left-[5.95rem] w-px origin-top bg-gradient-to-b from-[#e7c977] via-[#c9a24a] to-[#e7c977]"
+          initial={{ scaleY: 0 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 1.6, ease: 'easeOut' }}
+        />
+        {WEDDING_DAY.map((e, i) => (
+          <Reveal key={e.name} delay={i * 0.12} className="relative flex items-start gap-4 py-3.5">
+            <p className="w-[4.9rem] shrink-0 pt-1 text-right font-sans text-[0.78rem] leading-tight font-medium text-[#8c6a3a]">{e.time}</p>
+            <span className="relative z-10 mt-1.5 h-3 w-3 shrink-0 rounded-full bg-[#c9a24a] ring-4 ring-[#fbf1dc]" />
+            <div className="text-left">
+              <p className="font-script text-[2rem] leading-none text-[#4a2230]">{e.name}</p>
+              <p className="mt-1 font-serif text-[0.85rem] text-[#7a6266] italic">{e.meaning}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ───────── family who welcome you ───────── */
+function WelcomeCard({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <Reveal className="mx-auto w-[min(90vw,520px)]">
+      <div className="rounded-[1.6rem] border border-[#e6d3b4] bg-white/75 px-5 pb-6 text-center shadow-[0_18px_40px_-28px_rgba(90,50,30,0.6)]">
+        <p className="mx-auto -mt-4 w-fit rounded-full bg-[#f1e0c6] px-5 py-1.5 font-display text-[0.95rem] font-semibold text-[#5a3326] shadow-sm">{title}</p>
+        {children}
+      </div>
+    </Reveal>
+  );
+}
+
+export function Welcome() {
+  return (
+    <section>
+      <Heading eyebrow="With love & respect" title="Aavkaar" sub="The families who await you" />
+      <div className="mt-12 space-y-12">
+        <WelcomeCard title={WELCOME.hostsTitle}>
+          <div className="mt-4 space-y-1.5 font-serif text-[0.92rem] text-[#4a3a3e]">
+            {WELCOME.hosts.map((n) => (
+              <p key={n}>{n}</p>
+            ))}
+          </div>
+          <p className="mt-3 font-serif text-[0.92rem] font-semibold text-[#9c1f45]">{WELCOME.hostsClosing}</p>
+        </WelcomeCard>
+
+        <WelcomeCard title={WELCOME.eagerTitle}>
+          <div className="mt-4 grid gap-x-6 gap-y-1.5 font-serif text-[0.9rem] text-[#4a3a3e] sm:grid-cols-2">
+            {WELCOME.eager.map((n) => (
+              <p key={n}>{n}</p>
+            ))}
+          </div>
+        </WelcomeCard>
+
+        <Reveal className="mx-auto w-[min(90vw,520px)] text-center">
+          <p className="caps-label text-[0.62rem]! text-[#b8893a]">A little request from the bride’s siblings</p>
+          <p className="mt-2 font-script text-[1.9rem] leading-snug text-[#9c1f45]">“{WELCOME.kidsLine}”</p>
+          <div className="mt-4 flex flex-wrap justify-center gap-2">
+            {WELCOME.kids.map((k, i) => (
+              <motion.span
+                key={`${k}-${i}`}
+                className="rounded-full border border-[#ecc9d3] bg-[#fdf1f4] px-3 py-1 font-sans text-[0.8rem] text-[#7c2a40]"
+                initial={{ opacity: 0, scale: 0.6, y: 10 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ type: 'spring', stiffness: 260, damping: 15, delay: 0.15 + i * 0.05 }}
+              >
+                {k}
+              </motion.span>
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal className="px-6 text-center">
+          <p className="title-rose font-script text-[clamp(2.1rem,9vw,3rem)] leading-tight text-[#9c1f45]">“{WELCOME.presence}”</p>
+        </Reveal>
+      </div>
     </section>
   );
 }
@@ -256,7 +381,13 @@ export function Venue() {
           </div>
         </div>
       </Reveal>
-      <Reveal className="mt-7 flex justify-center">
+      <Reveal className="mx-auto mt-6 max-w-sm px-6 text-center">
+        <p className="font-serif text-[0.9rem] leading-relaxed text-[#4a3a3e]">
+          {VENUE.name}, {VENUE.address}
+        </p>
+        <p className="mx-auto mt-3 w-fit rounded-full bg-[#f1e0c6] px-4 py-1.5 font-sans text-[0.8rem] font-medium text-[#5a3326]">🚗 {VENUE.note}</p>
+      </Reveal>
+      <Reveal className="mt-6 flex justify-center">
         <a
           href={maps}
           target="_blank"

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Hero } from './invite/Hero';
-import { Celebrations, Divider, DressCode, Families, Hearts, Match, ThankYou, Venue } from './invite/Sections';
+import { Celebrations, Divider, DressCode, Families, Hearts, Match, ThankYou, Venue, WeddingDay, Welcome } from './invite/Sections';
 import { Gallery } from './invite/Gallery';
 import { MUSIC } from './invite/config';
 
@@ -69,11 +69,15 @@ export default function App() {
       <Divider />
       <Families />
       <Divider />
+      <WeddingDay />
+      <Divider />
       <DressCode />
       <Divider />
       <Venue />
       <Divider />
       <Gallery />
+      <Divider />
+      <Welcome />
       <ThankYou />
 
       <div className="pointer-events-none fixed inset-0 z-30 overflow-hidden" aria-hidden>
