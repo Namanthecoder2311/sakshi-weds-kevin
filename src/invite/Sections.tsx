@@ -87,44 +87,6 @@ function SmallFlourish() {
   );
 }
 
-/** Gold kalash with mango leaves and coconut, in a medallion (stands in for the Ganesh picture). */
-function Kalash({ className = '' }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 100 100" className={className} aria-hidden>
-      <defs>
-        <linearGradient id="kg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#f6dc93" />
-          <stop offset="0.5" stopColor="#d1a046" />
-          <stop offset="1" stopColor="#a87424" />
-        </linearGradient>
-        <radialGradient id="kbg">
-          <stop offset="0" stopColor="#fff8ea" />
-          <stop offset="1" stopColor="#f6e6c6" />
-        </radialGradient>
-      </defs>
-      <circle cx="50" cy="50" r="47" fill="url(#kbg)" stroke="url(#kg)" strokeWidth="2.2" />
-      <circle cx="50" cy="50" r="42" fill="none" stroke="#c9a24a" strokeWidth="0.7" strokeDasharray="1.5 2.5" />
-      {/* mango leaves */}
-      {[-58, -32, 32, 58].map((a) => (
-        <path key={a} d="M50 40 q-4 -14 0 -24 q4 10 0 24z" fill={Math.abs(a) > 40 ? '#5f8a3e' : '#76a04c'} transform={`rotate(${a} 50 40)`} />
-      ))}
-      {/* coconut */}
-      <ellipse cx="50" cy="31" rx="7.5" ry="9" fill="#a86a32" />
-      <path d="M45 26 q5 -6 10 0" fill="none" stroke="#7c4a1e" strokeWidth="1" />
-      <path d="M50 22 l0 -5" stroke="#5f8a3e" strokeWidth="1.6" strokeLinecap="round" />
-      {/* neck & pot */}
-      <rect x="40" y="38" width="20" height="6" rx="2" fill="url(#kg)" />
-      <path d="M36 44 H64 Q76 50 74 62 Q71 76 50 77 Q29 76 26 62 Q24 50 36 44Z" fill="url(#kg)" />
-      <path d="M28 57 Q50 63 72 57" fill="none" stroke="#9c1f45" strokeWidth="2.2" />
-      {[34, 42, 50, 58, 66].map((x) => (
-        <circle key={x} cx={x} cy={x === 50 ? 61 : x === 42 || x === 58 ? 60.2 : 58.6} r="1.2" fill="#fff3d0" />
-      ))}
-      <path d="M38 69 Q50 73 62 69" fill="none" stroke="#9c1f45" strokeWidth="0.9" opacity="0.7" />
-      <path d="M40 77 H60 L57 81 H43Z" fill="url(#kg)" />
-    </svg>
-  );
-}
-
 /* ───────── the family card (English version of the printed Gujarati card) ───────── */
 function FamilyLines({ lines }: { lines: string[] }) {
   return (
@@ -174,9 +136,8 @@ export function Families() {
           ))}
         </div>
 
-        {/* verse on both sides of the kalash */}
-        <div className="mt-6 grid grid-cols-2 items-center gap-x-3 gap-y-4 font-display text-[1.08rem] leading-snug font-semibold text-[#4e2b24] italic sm:grid-cols-[1fr_auto_1fr] sm:gap-x-5 sm:text-[1.12rem]">
-          <Kalash className="order-0 col-span-2 mx-auto w-20 sm:order-2 sm:col-span-1 sm:w-24" />
+        {/* verse in two halves, like the printed card */}
+        <div className="mt-6 grid grid-cols-2 items-center gap-x-3 gap-y-4 font-display text-[1.08rem] leading-snug font-semibold text-[#4e2b24] italic sm:gap-x-10 sm:text-[1.12rem]">
           <div className="order-1 sm:order-3 sm:text-left">
             {gauri.map((l) => (
               <p key={l}>{l}</p>
