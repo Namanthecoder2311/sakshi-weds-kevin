@@ -1,8 +1,9 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { Hero } from './invite/Hero';
 import { Celebrations, Divider, DressCode, Families, Hearts, Match, ThankYou, Venue, WeddingDay, Welcome } from './invite/Sections';
 import { Gallery } from './invite/Gallery';
-import { MUSIC } from './invite/config';
+import { MUSIC, MUSIC_TITLE } from './invite/config';
 
 export default function App() {
   // `?open` skips the curtains (handy for re-visits and previews)
@@ -10,6 +11,7 @@ export default function App() {
   const audio = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
   const [hasMusic, setHasMusic] = useState(false);
+  const [nowPlaying, setNowPlaying] = useState(false);
 
   // only show the music button when a song has actually been added
   useEffect(() => {
@@ -40,6 +42,9 @@ export default function App() {
       .then(() => {
         setPlaying(true);
         fadeTo(a, 0.55, 3500);
+        // a little “now playing” label slides in as the doors open
+        window.setTimeout(() => setNowPlaying(true), 1800);
+        window.setTimeout(() => setNowPlaying(false), 7000);
       })
       .catch(() => {});
   };
@@ -102,12 +107,37 @@ export default function App() {
       {hasMusic && (
         <>
           <audio ref={audio} src={MUSIC} loop preload="auto" />
+          <AnimatePresence>
+            {nowPlaying && (
+              <motion.div
+                className="fixed right-[4.25rem] bottom-[1.15rem] z-40 flex items-center gap-2 rounded-full border border-[#e7c977]/70 bg-white/90 py-1.5 pr-4 pl-3 font-sans text-[0.85rem] text-[#4a2230] shadow-lg backdrop-blur"
+                initial={{ opacity: 0, x: 24, scale: 0.9 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: 16 }}
+                transition={{ type: 'spring', stiffness: 220, damping: 20 }}
+              >
+                <span className="text-[#b8893a]">♪</span>
+                <span>
+                  Now playing · <b className="font-semibold text-[#9c1f45]">{MUSIC_TITLE}</b>
+                </span>
+              </motion.div>
+            )}
+          </AnimatePresence>
           <button
             onClick={toggle}
             aria-label={playing ? 'Pause music' : 'Play music'}
-            className="fixed right-4 bottom-4 z-40 grid h-11 w-11 place-items-center rounded-full border border-[#e7c977]/70 bg-white/85 text-[#9c1f45] shadow-lg backdrop-blur"
+            className="fixed right-4 bottom-4 z-40 grid h-11 w-11 place-items-center rounded-full border border-[#e7c977]/70 bg-white/90 text-[#9c1f45] shadow-lg backdrop-blur"
           >
-            {playing ? '❚❚' : '♪'}
+            {playing && <span className="music-halo pointer-events-none absolute inset-0 rounded-full" aria-hidden />}
+            {playing ? (
+              <span className="flex h-4 items-end gap-[3px]" aria-hidden>
+                {[0, 1, 2, 3].map((i) => (
+                  <span key={i} className="eq-bar h-full w-[3px] rounded-full bg-[#9c1f45]" />
+                ))}
+              </span>
+            ) : (
+              <span className="text-lg">♪</span>
+            )}
           </button>
         </>
       )}
