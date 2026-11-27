@@ -195,6 +195,46 @@ export function doorTextures() {
   return { map: tex(col), bumpMap: tex(bump, false), metalnessMap: tex(met, false), roughnessMap: tex(rou, false) };
 }
 
+/** Royal monogram for the seal: serif capitals with a fine divider, engraved into the gold. */
+function drawMonogram(x: CanvasRenderingContext2D, S: number, monogram: string, ink: string, rings = true) {
+  const a = monogram[0];
+  const b = monogram[monogram.length - 1];
+  const c = S / 2;
+  if (rings) {
+    x.strokeStyle = ink;
+    x.lineWidth = S * 0.016;
+    x.beginPath();
+    x.arc(c, c, S * 0.345, 0, Math.PI * 2);
+    x.stroke();
+    x.lineWidth = S * 0.006;
+    x.beginPath();
+    x.arc(c, c, S * 0.31, 0, Math.PI * 2);
+    x.stroke();
+  }
+  x.fillStyle = ink;
+  x.font = `700 ${S * 0.27}px "Cormorant Garamond", Georgia, serif`;
+  x.textAlign = 'center';
+  x.textBaseline = 'alphabetic';
+  const base = c + S * 0.092;
+  x.fillText(a, c - S * 0.118, base);
+  x.fillText(b, c + S * 0.122, base);
+  // fine divider with diamonds
+  x.fillRect(c - S * 0.004, c - S * 0.125, S * 0.008, S * 0.25);
+  const diamond = (y: number, r: number) => {
+    x.beginPath();
+    x.moveTo(c, y - r);
+    x.lineTo(c + r * 0.7, y);
+    x.lineTo(c, y + r);
+    x.lineTo(c - r * 0.7, y);
+    x.closePath();
+    x.fill();
+  };
+  diamond(c - S * 0.14, S * 0.022);
+  diamond(c + S * 0.14, S * 0.022);
+  diamond(c - S * 0.225, S * 0.014);
+  diamond(c + S * 0.225, S * 0.014);
+}
+
 export function sealTextures(monogram: string) {
   const S = 512;
   const [c, x] = canvas(S, S);
@@ -205,30 +245,22 @@ export function sealTextures(monogram: string) {
   g.addColorStop(1, '#7f5a0c');
   x.fillStyle = g;
   x.fillRect(0, 0, S, S);
-  x.strokeStyle = 'rgba(110,70,10,0.8)';
-  x.lineWidth = 8;
-  x.beginPath();
-  x.arc(S / 2, S / 2, S * 0.34, 0, Math.PI * 2);
-  x.stroke();
-  x.font = `${S * 0.36}px "Parisienne", cursive`;
-  x.textAlign = 'center';
-  x.textBaseline = 'middle';
-  x.fillStyle = '#6e4a08';
-  x.fillText(monogram, S / 2, S / 2 + 6);
+  // engraved: light rim up-left, shadow down-right, then the ink
+  x.save();
+  x.translate(-2.5, -2.5);
+  drawMonogram(x, S, monogram, 'rgba(255,246,210,0.85)');
+  x.restore();
+  x.save();
+  x.translate(3, 3);
+  drawMonogram(x, S, monogram, 'rgba(70,42,4,0.75)');
+  x.restore();
+  drawMonogram(x, S, monogram, '#8a5e0e');
+
   const [b, bx] = canvas(S, S);
   bx.fillStyle = '#000';
   bx.fillRect(0, 0, S, S);
-  bx.strokeStyle = '#fff';
-  bx.lineWidth = 10;
-  bx.beginPath();
-  bx.arc(S / 2, S / 2, S * 0.34, 0, Math.PI * 2);
-  bx.stroke();
-  bx.font = x.font;
-  bx.textAlign = 'center';
-  bx.textBaseline = 'middle';
-  bx.fillStyle = '#fff';
   bx.filter = 'blur(1.5px)';
-  bx.fillText(monogram, S / 2, S / 2 + 6);
+  drawMonogram(bx, S, monogram, '#fff');
   return { map: tex(c), bumpMap: tex(b, false) };
 }
 

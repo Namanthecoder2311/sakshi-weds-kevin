@@ -104,10 +104,17 @@ export function WaxSeal({ className, tone = 'red' }: { className?: string; tone?
       <circle cx="50" cy="50" r="33" fill={`url(#${id}i)`} />
       <circle cx="50" cy="50" r="33" fill="none" stroke={gold ? '#7f5a0c' : '#5a0717'} strokeWidth="1.6" opacity="0.6" />
       <circle cx="50" cy="50" r="29" fill="none" stroke={gold ? '#fff3c4' : '#f08a98'} strokeOpacity="0.35" strokeWidth="0.8" />
-      <text x="50" y="61" textAnchor="middle" fontFamily="Parisienne, cursive" fontSize="30" fill={gold ? '#7a520c' : `url(#${id}f)`} stroke={gold ? '#fff0c0' : '#5a0717'} strokeWidth="0.35">
-        {COUPLE.monogram[0]}
-        <tspan dx="-3">{COUPLE.monogram[1]}</tspan>
-      </text>
+      {/* royal monogram: serif S | K with a fine divider */}
+      <g fill={gold ? '#7a520c' : `url(#${id}f)`} stroke={gold ? '#fff0c0' : '#5a0717'} strokeWidth="0.3">
+        <text x="38.5" y="58.6" textAnchor="middle" fontFamily="'Cormorant Garamond', Georgia, serif" fontWeight="700" fontSize="25">
+          {COUPLE.monogram[0]}
+        </text>
+        <text x="61.5" y="58.6" textAnchor="middle" fontFamily="'Cormorant Garamond', Georgia, serif" fontWeight="700" fontSize="25">
+          {COUPLE.monogram[1]}
+        </text>
+        <rect x="49.55" y="38" width="0.9" height="24" stroke="none" />
+        <path d="M50 34.6 l1.6 2.2 l-1.6 2.2 l-1.6 -2.2z M50 60.8 l1.6 2.2 l-1.6 2.2 l-1.6 -2.2z" stroke="none" />
+      </g>
       <path d="M22 32 Q32 18 52 15" stroke={gold ? '#fffbe6' : '#ffd0d6'} strokeOpacity="0.5" strokeWidth="3" strokeLinecap="round" fill="none" />
     </svg>
   );
