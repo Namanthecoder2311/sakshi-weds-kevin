@@ -1,7 +1,16 @@
 @import "tailwindcss";
 
+/* Orange Avenue (Circlefont, personal-use demo) for names & headings.
+   size-adjust tames its large x-height; any glyph the demo lacks falls back to Cormorant. */
+@font-face {
+  font-family: "Orange Avenue";
+  src: url("/fonts/orange-avenue.otf") format("opentype");
+  font-display: swap;
+  size-adjust: 88%;
+}
+
 @theme {
-  --font-script: "Parisienne", cursive;
+  --font-script: "Orange Avenue", "Cormorant Garamond", Georgia, serif;
   --font-serif: "Lora", Georgia, serif;
   --font-display: "Cormorant Garamond", Georgia, serif;
   --font-sans: "Jost", system-ui, sans-serif;
@@ -23,7 +32,7 @@
 
 /* A hint of outline keeps the script crisp on phones. */
 .font-script {
-  -webkit-text-stroke: 0.2px currentColor;
+  -webkit-text-stroke: 0.1px currentColor;
 }
 
 /* ── candle-lit table ───────────────────────── */
