@@ -89,12 +89,27 @@ function SmallFlourish() {
 }
 
 /* ───────── the family card (English version of the printed Gujarati card) ───────── */
+/** Names guests should notice first: shown in bold maroon wherever they appear. */
+const HIGHLIGHT = ['Vimlaben Vasanji Satra'];
+function Highlighted({ text }: { text: string }) {
+  const name = HIGHLIGHT.find((h) => text.includes(h));
+  if (!name) return <>{text}</>;
+  const [before, after] = text.split(name);
+  return (
+    <>
+      {before}
+      <b className="text-[1.08em] font-bold whitespace-nowrap text-[#9c1f45]">{name}</b>
+      {after}
+    </>
+  );
+}
+
 function FamilyLines({ lines }: { lines: string[] }) {
   return (
     <div className="space-y-0.5">
       {lines.map((l) => (
         <p key={l} className="font-serif text-[0.97rem] font-semibold text-[#4a2a30] sm:text-[1.03rem]">
-          {l}
+          <Highlighted text={l} />
         </p>
       ))}
     </div>
@@ -233,7 +248,9 @@ export function Welcome() {
         <TitleBar>{WELCOME.hostsTitle}</TitleBar>
         <div className="mt-4 space-y-1 font-serif font-medium text-[1.02rem] text-[#33242a] sm:text-[1.06rem]">
           {WELCOME.hosts.map((n) => (
-            <p key={n}>{n}</p>
+            <p key={n}>
+              <Highlighted text={n} />
+            </p>
           ))}
         </div>
         <p className="mt-3 font-serif text-[1.02rem] font-bold text-[#4a2a30] sm:text-[1.06rem]">{WELCOME.hostsClosing}</p>
@@ -278,7 +295,7 @@ const GRID = [
   { v: '✕' },
   { v: '♡' },
   { v: '♡' },
-  { v: '♥', s: true },
+  { v: '♥', s: true, big: true },
   { v: '✕' },
   { v: '∞' },
   { v: '✕' },
@@ -297,7 +314,7 @@ export function Match() {
       <Reveal className="relative mx-auto mt-8 w-[min(80vw,330px)]">
         <div className="grid grid-cols-3">
           {GRID.map((c, i) => {
-            const content = <span className={`grid h-full w-full place-items-center text-[#9c1f45] ${c.script ? 'font-script text-5xl' : 'text-[1.9rem]'}`}>{c.v}</span>;
+            const content = <span className={`grid h-full w-full place-items-center text-[#9c1f45] ${c.script ? 'font-script text-5xl' : c.big ? 'text-[clamp(4rem,17vw,5.2rem)] leading-none' : 'text-[1.9rem]'}`}>{c.v}</span>;
             return (
               <div key={i} className={`aspect-square p-2.5 ${i % 3 !== 2 ? 'border-r' : ''} ${i < 6 ? 'border-b' : ''} border-[#c9a24a]/70`}>
                 {c.s ? (
