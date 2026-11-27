@@ -104,7 +104,7 @@ export function WaxSeal({ className, tone = 'red' }: { className?: string; tone?
       <circle cx="50" cy="50" r="33" fill={`url(#${id}i)`} />
       <circle cx="50" cy="50" r="33" fill="none" stroke={gold ? '#7f5a0c' : '#5a0717'} strokeWidth="1.6" opacity="0.6" />
       <circle cx="50" cy="50" r="29" fill="none" stroke={gold ? '#fff3c4' : '#f08a98'} strokeOpacity="0.35" strokeWidth="0.8" />
-      <text x="50" y="61" textAnchor="middle" fontFamily="Great Vibes, cursive" fontSize="30" fill={gold ? '#7a520c' : `url(#${id}f)`} stroke={gold ? '#fff0c0' : '#5a0717'} strokeWidth="0.35">
+      <text x="50" y="61" textAnchor="middle" fontFamily="Parisienne, cursive" fontSize="30" fill={gold ? '#7a520c' : `url(#${id}f)`} stroke={gold ? '#fff0c0' : '#5a0717'} strokeWidth="0.35">
         {COUPLE.monogram[0]}
         <tspan dx="-3">{COUPLE.monogram[1]}</tspan>
       </text>

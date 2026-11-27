@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-script: "Great Vibes", cursive;
+  --font-script: "Parisienne", cursive;
   --font-serif: "Lora", Georgia, serif;
   --font-display: "Cormorant Garamond", Georgia, serif;
   --font-sans: "Jost", system-ui, sans-serif;
@@ -21,9 +21,9 @@
   }
 }
 
-/* Great Vibes has hairline strokes; a hint of outline makes it read clearly on phones. */
+/* A hint of outline keeps the script crisp on phones. */
 .font-script {
-  -webkit-text-stroke: 0.45px currentColor;
+  -webkit-text-stroke: 0.2px currentColor;
 }
 
 /* ── candle-lit table ───────────────────────── */

@@ -210,7 +210,7 @@ export function sealTextures(monogram: string) {
   x.beginPath();
   x.arc(S / 2, S / 2, S * 0.34, 0, Math.PI * 2);
   x.stroke();
-  x.font = `${S * 0.36}px "Great Vibes", cursive`;
+  x.font = `${S * 0.36}px "Parisienne", cursive`;
   x.textAlign = 'center';
   x.textBaseline = 'middle';
   x.fillStyle = '#6e4a08';

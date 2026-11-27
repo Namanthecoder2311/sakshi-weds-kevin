@@ -30,7 +30,7 @@ export function Opening3D({ onOpen, onDone, onFail }: { onOpen: () => void; onDo
     let cancelled = false;
     (async () => {
       try {
-        await document.fonts?.load?.('64px "Great Vibes"');
+        await document.fonts?.load?.('64px "Parisienne"');
         const { createPalace } = await import('./palace');
         if (cancelled || !canvas.current) return;
         palace.current = await createPalace(canvas.current, {
